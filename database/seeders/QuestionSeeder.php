@@ -16,7 +16,7 @@ class QuestionSeeder extends Seeder
      */
     public function run()
     {
-        $questionary = base_path("database/seeders/data/questionay.csv");
+        $questionary = base_path("database/seeders/data/questionary.csv");
 
         if (!file_exists($questionary) || !is_readable($questionary)) {
             return false;
@@ -26,7 +26,7 @@ class QuestionSeeder extends Seeder
 
         DB::transaction(function () use ($csv_questionary) {
             while (($data = fgetcsv($csv_questionary, 0, ";")) !== false) {
-                $category__id   = intval(trim($data[0], " "));
+                $category_id   = intval(trim($data[0], " "));
                 $question       = trim($data[1], " ");
                 $option_1       = trim($data[2], " ");
                 $option_2       = trim($data[3], " ");
@@ -35,24 +35,22 @@ class QuestionSeeder extends Seeder
                 $unit           = trim($data[6], " ");
                 $answer         = trim($data[7], " ");
                 
-                $category_id = Category::find($category__id)->id;
-                if($category_id){
-                    Question::updateOrCreate(
-                        [
-                            'answer'            => $answer.' '.$unit,
-                        ],
-                        [
-                            'category_id'       => $category_id,
-                            'question_name'     => $question,
-                            'answers_options'   => json_encode([
-                                $option_1.' '.$unit, 
-                                $option_2.' '.$unit, 
-                                $option_3.' '.$unit, 
-                                $option_4.' '.$unit
-                            ]),
-                        ]
-                    );   
-                }
+                Question::updateOrCreate(
+                    [
+                        'answer'            => $answer,
+                    ],
+                    [
+                        'category_id'       => $category_id,
+                        'question_name'     => $question,
+                        'answers_options'   => json_encode([
+                            $option_1, 
+                            $option_2, 
+                            $option_3, 
+                            $option_4
+                        ]),
+                        'unit'              => $unit,
+                    ]
+                );
             }
         });
     }
