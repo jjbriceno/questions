@@ -26,7 +26,7 @@ class QuestionSeeder extends Seeder
 
         DB::transaction(function () use ($csv_questionary) {
             while (($data = fgetcsv($csv_questionary, 0, ";")) !== false) {
-                $category_id   = intval(trim($data[0], " "));
+                $category__id   = intval(trim($data[0], " "));
                 $question       = trim($data[1], " ");
                 $option_1       = trim($data[2], " ");
                 $option_2       = trim($data[3], " ");
@@ -35,22 +35,25 @@ class QuestionSeeder extends Seeder
                 $unit           = trim($data[6], " ");
                 $answer         = trim($data[7], " ");
                 
-                Question::updateOrCreate(
-                    [
-                        'answer'            => $answer,
-                    ],
-                    [
-                        'category_id'       => $category_id,
-                        'question_name'     => $question,
-                        'answers_options'   => json_encode([
-                            $option_1, 
-                            $option_2, 
-                            $option_3, 
-                            $option_4
-                        ]),
-                        'unit'              => $unit,
-                    ]
-                );
+                $category_id = Category::find($category__id)->id;
+                if($category_id){
+                    Question::updateOrCreate(
+                        [
+                            'category_id'       => $category_id,
+                            'question_name'     => $question,
+                        ],
+                        [
+                            'answers_options'   => json_encode([
+                                $option_1, 
+                                $option_2, 
+                                $option_3, 
+                                $option_4
+                            ]),
+                            'answer'            => $answer,
+                            'unit'              => $unit,
+                        ]
+                    );
+                }
             }
         });
     }
