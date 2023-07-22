@@ -52,9 +52,9 @@ class QuestionController extends Controller
                 'category_id'       => $category_id,
                 'question_name'     => $request->question_name,
                 'answers_options'   => json_encode([
-                    $request->answers_options['option_1'], 
-                    $request->answers_options['option_2'], 
-                    $request->answers_options['option_3'], 
+                    $request->answers_options['option_1'],
+                    $request->answers_options['option_2'],
+                    $request->answers_options['option_3'],
                     $request->answers_options['option_4']
                 ]),
                 'answer'            => $request->answer,
@@ -114,9 +114,9 @@ class QuestionController extends Controller
                 'category_id'       => $category_id,
                 'question_name'     => $request->question_name,
                 'answers_options'   => json_encode([
-                    $request->answers_options['option_1'], 
-                    $request->answers_options['option_2'], 
-                    $request->answers_options['option_3'], 
+                    $request->answers_options['option_1'],
+                    $request->answers_options['option_2'],
+                    $request->answers_options['option_3'],
                     $request->answers_options['option_4']
                 ]),
                 'answer'            => $request->answer,

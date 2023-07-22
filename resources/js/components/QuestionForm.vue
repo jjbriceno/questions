@@ -1,26 +1,25 @@
 <template>
     <div class="container mt-5">
-        <h2>Questionnaire</h2>
         <form @submit.prevent="submitForm">
             <!-- Personal Information -->
             <div class="card">
                 <div class="card-header">
-                    <h2>Personal information</h2>
+                    <h2 class="card-title">Información personal</h2>
                 </div>
                 <div class="card-body">
                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label>First Name</label>
+                        <div class="form-group">
+                            <label>Nombre(s)</label>
                             <input v-model="firstName" class="form-control" required />
                         </div>
-                        <div class="form-group col-md-6">
-                            <label>Last Name</label>
+                        <div class="form-group">
+                            <label>Apellido(s)</label>
                             <input v-model="lastName" class="form-control" required />
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>DNI</label>
+                        <label>Cédula</label>
                         <input v-model="dni" class="form-control" required />
                     </div>
 
@@ -31,13 +30,17 @@
                 </div>
             </div>
 
-            <!-- Questions -->
-            <div class="form-group" v-for="(question, index) in questions" :key="index">
-                <label>{{ question }}</label>
-                <input v-model="answers[index]" class="form-control" />
+            <div class="card mt-5 p-4">
+                <div class="form-group" v-for="(question, index) in questions" :key="index">
+                    <label>{{ question.question_name }}</label>
+                    <div class="m-2" v-for="(option, index_) in JSON.parse(question.answers_options)" :key="index_">
+                        <input type="radio" :value="option" :name="option" v-model="selectedOptions[index]">
+                        <label :for="option"></label>
+                        {{ option }}
+                    </div>
+                </div>
             </div>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary mt-2 col-12">Enviar</button>
         </form>
     </div>
 </template>
@@ -46,16 +49,13 @@
 export default {
     data() {
         return {
-            questions: [
-                'What is your favorite color?',
-                'What is your favorite animal?',
-                'What is your favorite food?',
-            ],
+            questions: [],
             answers: [],
             firstName: '',
             lastName: '',
             dni: '',
             email: '',
+            selectedOptions: []
         };
     },
     methods: {
@@ -82,6 +82,16 @@ export default {
             this.email = '';
         },
     },
+
+    async created() {
+        const vm = this;
+        try {
+            let response = await axios.get('get-questions');
+            vm.questions = response.data.questions;
+        } catch (error) {
+            console.log(error)
+        }
+    }
 };
 </script>
   
