@@ -5104,12 +5104,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       questions: [],
-      answers: [],
       firstName: '',
       lastName: '',
       dni: '',
       email: '',
-      selectedOptions: []
+      selectedOptions: [],
+      currentQuestionIndex: 0
     };
   },
   methods: {
@@ -5129,11 +5129,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       console.log(userResponse);
 
       // Clear the form after submission
+      this.reset();
+    },
+    reset: function reset() {
       this.answers = [];
       this.firstName = '';
       this.lastName = '';
       this.dni = '';
       this.email = '';
+      this.selectedOptions = [];
+      this.currentQuestionIndex = 0;
+    },
+    nextQuestion: function nextQuestion() {
+      this.currentQuestionIndex++;
+    },
+    prevQuestion: function prevQuestion() {
+      this.currentQuestionIndex--;
     }
   },
   created: function created() {
@@ -5150,18 +5161,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           case 4:
             response = _context.sent;
             vm.questions = response.data.questions;
-            _context.next = 11;
+            console.log(vm.questions);
+            _context.next = 12;
             break;
-          case 8:
-            _context.prev = 8;
+          case 9:
+            _context.prev = 9;
             _context.t0 = _context["catch"](1);
             console.log(_context.t0);
-          case 11:
+          case 12:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[1, 8]]);
+      }, _callee, null, [[1, 9]]);
     }))();
+  },
+  computed: {
+    currentQuestion: function currentQuestion() {
+      return this.questions[this.currentQuestionIndex];
+    }
   }
 });
 
@@ -5308,48 +5325,63 @@ var render = function render() {
         _vm.email = $event.target.value;
       }
     }
-  })])])]), _vm._v(" "), _c("div", {
+  })])])]), _vm._v(" "), _vm.currentQuestion ? _c("div", {
     staticClass: "card mt-5 p-4"
-  }, _vm._l(_vm.questions, function (question, index) {
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", [_vm._v(_vm._s(_vm.currentQuestion.question_name))]), _vm._v(" "), _vm._l(JSON.parse(_vm.currentQuestion.answers_options), function (option, index_) {
     return _c("div", {
-      key: index,
-      staticClass: "form-group"
-    }, [_c("label", [_vm._v(_vm._s(question.question_name))]), _vm._v(" "), _vm._l(JSON.parse(question.answers_options), function (option, index_) {
-      return _c("div", {
-        key: index_,
-        staticClass: "m-2"
-      }, [_c("input", {
-        directives: [{
-          name: "model",
-          rawName: "v-model",
-          value: _vm.selectedOptions[index],
-          expression: "selectedOptions[index]"
-        }],
-        attrs: {
-          type: "radio",
-          name: option
-        },
-        domProps: {
-          value: option,
-          checked: _vm._q(_vm.selectedOptions[index], option)
-        },
-        on: {
-          change: function change($event) {
-            return _vm.$set(_vm.selectedOptions, index, option);
-          }
+      key: index_,
+      staticClass: "m-2"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: _vm.selectedOptions[_vm.currentQuestionIndex],
+        expression: "selectedOptions[currentQuestionIndex]"
+      }],
+      attrs: {
+        type: "radio",
+        name: option
+      },
+      domProps: {
+        value: option,
+        checked: _vm._q(_vm.selectedOptions[_vm.currentQuestionIndex], option)
+      },
+      on: {
+        change: function change($event) {
+          return _vm.$set(_vm.selectedOptions, _vm.currentQuestionIndex, option);
         }
-      }), _vm._v(" "), _c("label", {
-        attrs: {
-          "for": option
-        }
-      }), _vm._v("\n                    " + _vm._s(option) + "\n                ")]);
-    })], 2);
-  }), 0), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary mt-2 col-12",
+      }
+    }), _vm._v(" "), _c("label", {
+      attrs: {
+        "for": option
+      }
+    }), _vm._v("\n                    " + _vm._s(option + " " + _vm.currentQuestion.unit) + "\n                ")]);
+  })], 2)]) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "mt-3 d-flex justify-content-between"
+  }, [_vm.currentQuestionIndex > 0 ? _c("button", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.prevQuestion
+    }
+  }, [_vm._v("Anterior")]) : _vm._e(), _vm._v(" "), _vm.currentQuestionIndex < _vm.questions.length - 1 ? _c("button", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.nextQuestion
+    }
+  }, [_vm._v("Siguiente")]) : _vm._e(), _vm._v(" "), _vm.currentQuestionIndex === _vm.questions.length - 1 ? _c("button", {
+    staticClass: "btn btn-primary",
     attrs: {
       type: "submit"
     }
-  }, [_vm._v("Enviar")])])]);
+  }, [_vm._v("Enviar")]) : _vm._e()])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,

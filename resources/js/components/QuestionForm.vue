@@ -1,7 +1,6 @@
 <template>
     <div class="container mt-5">
         <form @submit.prevent="submitForm">
-            <!-- Personal Information -->
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title">Información personal</h2>
@@ -30,17 +29,25 @@
                 </div>
             </div>
 
-            <div class="card mt-5 p-4">
-                <div class="form-group" v-for="(question, index) in questions" :key="index">
-                    <label>{{ question.question_name }}</label>
-                    <div class="m-2" v-for="(option, index_) in JSON.parse(question.answers_options)" :key="index_">
-                        <input type="radio" :value="option" :name="option" v-model="selectedOptions[index]">
+            <div class="card mt-5 p-4" v-if="currentQuestion">
+                <div class="form-group">
+                    <label>{{ currentQuestion.question_name }}</label>
+                    <div class="m-2" v-for="(option, index_) in JSON.parse(currentQuestion.answers_options)" :key="index_">
+                        <input type="radio" :value="option" :name="option" v-model="selectedOptions[currentQuestionIndex]">
                         <label :for="option"></label>
-                        {{ option }}
+                        {{ option + ' ' + currentQuestion.unit }}
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary mt-2 col-12">Enviar</button>
+
+            <div class="mt-3 d-flex justify-content-between">
+                <button v-if="currentQuestionIndex > 0" type="button" class="btn btn-primary"
+                    @click="prevQuestion">Anterior</button>
+                <button v-if="currentQuestionIndex < questions.length - 1" type="button" class="btn btn-primary"
+                    @click="nextQuestion">Siguiente</button>
+                <button v-if="currentQuestionIndex === questions.length - 1" type="submit"
+                    class="btn btn-primary">Enviar</button>
+            </div>
         </form>
     </div>
 </template>
@@ -50,12 +57,12 @@ export default {
     data() {
         return {
             questions: [],
-            answers: [],
             firstName: '',
             lastName: '',
             dni: '',
             email: '',
-            selectedOptions: []
+            selectedOptions: [],
+            currentQuestionIndex: 0,
         };
     },
     methods: {
@@ -75,11 +82,25 @@ export default {
             console.log(userResponse);
 
             // Clear the form after submission
+            this.reset();
+        },
+
+        reset() {
             this.answers = [];
             this.firstName = '';
             this.lastName = '';
             this.dni = '';
             this.email = '';
+            this.selectedOptions = [];
+            this.currentQuestionIndex = 0;
+        },
+
+        nextQuestion() {
+            this.currentQuestionIndex++;
+        },
+
+        prevQuestion() {
+            this.currentQuestionIndex--;
         },
     },
 
@@ -88,10 +109,17 @@ export default {
         try {
             let response = await axios.get('get-questions');
             vm.questions = response.data.questions;
+            console.log(vm.questions);
         } catch (error) {
             console.log(error)
         }
-    }
+    },
+
+    computed: {
+        currentQuestion() {
+            return this.questions[this.currentQuestionIndex];
+        },
+    },
 };
 </script>
   
