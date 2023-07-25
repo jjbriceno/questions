@@ -91,9 +91,9 @@ class CategoryController extends Controller
             'level'             => ['required'],
         ]);
 
-        $category = Category::create(
+        $category = Category::updateOrCreate(
             [
-                'id'                => $category->is
+                'id'                => $category->id
             ],
             [
                 'category_number'   => $request->category_number,
