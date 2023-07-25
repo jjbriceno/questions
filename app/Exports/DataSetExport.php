@@ -5,22 +5,45 @@ namespace App\Exports;
 use App\Models\DataSet;
 use Illuminate\Database\Eloquent\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromView;
+use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class DataSetExport implements FromCollection, WithHeadings
+class DataSetExport implements FromView //FromCollection, WithHeadings
 {
+    public function view() : View
+    {
+        return view('dataSet', [
+            'dataSet' => DataSet::all()
+        ]);
+    }
+    
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection()
-    {
-        $data_sets = DataSet::all();
+    // public function collection()
+    // {
+    //     return DataSet::select(
+    //         'id',
+    //         'category_id',
+    //         'question_id',
+    //         'user_id',
+    //         'user_answer', 
+    //         'correct_answer',
+    //         'output'
+    //     )->get();
+    // }
 
-        return new Collection($data_sets);
-    }
-
-    public function headings() : array 
-    {
-        return [];
-    }
+    // public function headings() : array 
+    // {
+    //     return [
+    //         'ID',
+    //         'CategoryId',
+    //         'QuestionId',
+    //         'UserId',
+    //         'UserAnswer', 
+    //         'CorrectAnswer',
+    //         'Output'
+    //     ];
+    // }
 }

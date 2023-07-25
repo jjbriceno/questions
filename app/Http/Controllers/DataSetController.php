@@ -8,6 +8,8 @@ use App\Models\Question;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Exports\DataSetExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DataSetController extends Controller
 {
@@ -133,5 +135,13 @@ class DataSetController extends Controller
     {
         $data_set->delete();
         return response()->json(['data_set' => $data_set], Response::HTTP_OK);
+    }
+
+    /**
+     * For export .csv files
+     */
+    public function export()
+    {
+        return Excel::download(new DataSetExport, 'DataSet.csv');
     }
 }

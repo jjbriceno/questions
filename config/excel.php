@@ -43,11 +43,11 @@ return [
         */
         'csv'                    => [
             'delimiter'              => ';',
-            'enclosure'              => '"',
+            'enclosure'              => false,
             'line_ending'            => PHP_EOL,
             'use_bom'                => false,
             'include_separator_line' => false,
-            'excel_compatibility'    => false,
+            'excel_compatibility'    => true,
             'output_encoding'        => '',
             'test_auto_detect'       => true,
         ],
