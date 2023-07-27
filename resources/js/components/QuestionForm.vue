@@ -71,7 +71,14 @@
 
                             <div class="form-group">
                                 <label>Cédula</label>
-                                <input v-model="dni" class="form-control" required />
+                                <input  type="number" 
+                                        pattern="^[0-9]+"
+                                        min="1000000" 
+                                        step="1"
+                                        v-model="dni" 
+                                        class="form-control" 
+                                        required 
+                                    />
                             </div>
 
                             <div class="form-group">
