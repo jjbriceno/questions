@@ -18,7 +18,8 @@ class Question extends Model
         'category_id',
         'question_name', 
         'answers_options',
-        'answer'
+        'answer',
+        'unit'
     ];
 
     /**

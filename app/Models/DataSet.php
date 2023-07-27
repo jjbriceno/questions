@@ -23,6 +23,8 @@ class DataSet extends Model
         'output'
     ];
 
+    protected $with = ['category', 'question', 'user'];
+
     /**
      * DataSet belongsTo Category.
      *

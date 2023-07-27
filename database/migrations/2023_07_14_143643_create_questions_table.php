@@ -21,6 +21,7 @@ class CreateQuestionsTable extends Migration
             $table->longText('question_name')->comment('Nombre de la pregunta');
             $table->json('answers_options')->comment('Opciones para responder la pregunta');
             $table->string('answer')->comment('Respuesta correcta a la pregunta');
+            $table->text('unit')->comment('Unidad de medida de la respuesta');
             
             $table->timestamps();
         });
