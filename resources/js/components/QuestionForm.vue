@@ -71,19 +71,22 @@
 
                             <div class="form-group">
                                 <label>Cédula</label>
-                                <input  type="number" 
-                                        pattern="^[0-9]+"
-                                        min="1000000" 
-                                        step="1"
+                                <input  type="text"
+                                        onkeypress="return event.charCode>=48 && event.charCode<=57"
+                                        class="form-control"
+                                        size="9"
                                         v-model="dni" 
-                                        class="form-control" 
                                         required 
                                     />
                             </div>
 
                             <div class="form-group">
                                 <label>Email</label>
-                                <input v-model="email" class="form-control" required />
+                                <input  type="email"
+                                        v-model="email"
+                                        pattern=".+@.+\.com"
+                                        size="30"
+                                        class="form-control" required />
                             </div>
                         </div>
                     </div>
