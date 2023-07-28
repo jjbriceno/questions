@@ -34,11 +34,11 @@
                 </button>
                 <button v-if="currentQuestionIndex < questions.length - 1" type="button" class="btn btn-primary"
                     @click="nextQuestion" :disabled="!isOptionSelected">
-                    Siguiente {{ currentQuestionIndex }}
+                    Siguiente
                 </button>
                 <button v-if="currentQuestionIndex === questions.length - 1" type="button" class="btn btn-primary"
                     @click="submitForm" :disabled="!isOptionSelected">
-                    Enviar 
+                    Enviar
                 </button>
             </div>
         </form>
@@ -47,8 +47,8 @@
   
 <script>
 export default {
-    props : {
-        id : Number,
+    props: {
+        id: Number,
     },
     data() {
         return {

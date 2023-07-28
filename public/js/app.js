@@ -5750,7 +5750,7 @@ var render = function render() {
     on: {
       click: _vm.nextQuestion
     }
-  }, [_vm._v("\n                Siguiente " + _vm._s(_vm.currentQuestionIndex) + "\n            ")]) : _vm._e(), _vm._v(" "), _vm.currentQuestionIndex === _vm.questions.length - 1 ? _c("button", {
+  }, [_vm._v("\n                Siguiente\n            ")]) : _vm._e(), _vm._v(" "), _vm.currentQuestionIndex === _vm.questions.length - 1 ? _c("button", {
     staticClass: "btn btn-primary",
     attrs: {
       type: "button",
@@ -5759,7 +5759,7 @@ var render = function render() {
     on: {
       click: _vm.submitForm
     }
-  }, [_vm._v("\n                Enviar \n            ")]) : _vm._e()])])]);
+  }, [_vm._v("\n                Enviar\n            ")]) : _vm._e()])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,

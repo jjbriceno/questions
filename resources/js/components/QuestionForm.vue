@@ -41,23 +41,17 @@
                 <h2 class="text-center">Acciones del Administrador</h2>
                 <p class="text-center">¿Desea descargar el Dataset?</p>
                 <div class="d-flex justify-content-center mt-3">
-                    <a
-                        class="btn btn-primary"
-                        :href="'/data-set/export'"
-                        title="Download"
-                        data-toggle="tooltip"
-                        v-has-tooltip
-                        target="_blank"
-                    >
-                    Descargar
+                    <a class="btn btn-primary" :href="'/data-set/export'" title="Download" data-toggle="tooltip"
+                        v-has-tooltip target="_blank">
+                        Descargar
                     </a>
                 </div>
             </div>
 
             <!-- Section 4 -->
             <!-- <div v-if="showPersonalInfo"> -->
-                <!-- Personal Information Form -->
-                <!-- <form @submit.prevent="proceedToQuestions">
+            <!-- Personal Information Form -->
+            <!-- <form @submit.prevent="proceedToQuestions">
                     <div class="card">
                         <div class="card-header d-flex justify-content-center">
                             <h2 class="card-title">Información personal</h2>
@@ -111,7 +105,7 @@
                         </div>
                         <div class="card-body" v-if="currentQuestion">
                             <div class="mb-3 d-flex justify-content-center">
-                                <h5 class="mb-2">Categoría {{ currentQuestion.category.category_number }}: 
+                                <h5 class="mb-2">Categoría {{ currentQuestion.category.category_number }}:
                                     {{ currentQuestion.category.name }}
                                     <div class="d-flex justify-content-center">
                                         <h6 class="mb-2"> (Nivel de dificultad: {{ currentQuestion.category.level }})</h6>
@@ -119,50 +113,29 @@
                                 </h5>
                             </div>
                             <div class="mb-3">
-                                <label><strong>P{{ currentQuestion.id }}:</strong> {{ currentQuestion.question_name }}</label>
+                                <label><strong>P{{ currentQuestion.id }}:</strong> {{ currentQuestion.question_name
+                                }}</label>
                             </div>
-                            <div
-                            class="m-2 opciones"
-                            v-for="(option, index_) in JSON.parse(currentQuestion.answers_options)"
-                            :key="index_"
-                            >
-                            <input
-                                type="radio"
-                                :value="option"
-                                :name="option"
-                                v-model="selectedOptions[currentQuestionIndex]"
-                                class="form-check-input"
-                                :id="'opcion-' + index_"
-                            />
-                            <label :for="'opcion-' + index_">{{ option + " " + currentQuestion.unit }}</label>
+                            <div class="m-2 opciones"
+                                v-for="(option, index_) in JSON.parse(currentQuestion.answers_options)" :key="index_">
+                                <input type="radio" :value="option" :name="option"
+                                    v-model="selectedOptions[currentQuestionIndex]" class="form-check-input"
+                                    :id="'opcion-' + index_" />
+                                <label :for="'opcion-' + index_">{{ option + " " + currentQuestion.unit }}</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="mt-3 d-flex justify-content-between">
-                        <button
-                        v-if="currentQuestionIndex > 0"
-                        type="button"
-                        class="btn btn-primary"
-                        @click="prevQuestion"
-                        >
-                        Anterior
+                        <button v-if="currentQuestionIndex > 0" type="button" class="btn btn-primary" @click="prevQuestion">
+                            Anterior
                         </button>
-                        <button
-                        v-if="currentQuestionIndex < questions.length - 1"
-                        type="button"
-                        class="btn btn-primary"
-                        @click="nextQuestion"
-                        :disabled="!isOptionSelected"
-                        >
-                        Siguiente
+                        <button v-if="currentQuestionIndex < questions.length - 1" type="button" class="btn btn-primary"
+                            @click="nextQuestion" :disabled="!isOptionSelected">
+                            Siguiente
                         </button>
-                        <button
-                        v-if="currentQuestionIndex === questions.length - 1"
-                        type="submit"
-                        class="btn btn-primary"
-                        >
-                        Enviar
+                        <button v-if="currentQuestionIndex === questions.length - 1" type="submit" class="btn btn-primary">
+                            Enviar
                         </button>
                     </div>
                 </form>
@@ -172,9 +145,9 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
+export default {
+    data() {
+        return {
             showPersonalInfo: true,
             questions: [],
             selectedOptions: [],
@@ -190,140 +163,140 @@
             showQuestionnaire: false,
             showAdminLogin: false,
             showAdminActions: false,
-            };
+        };
+    },
+    methods: {
+        proceedToQuestionnaire() {
+            this.showPresentation = false;
+            this.showPersonalInfo = true;
         },
-        methods: {
-            proceedToQuestionnaire() {
-                this.showPresentation = false;
-                this.showPersonalInfo = true;
-            },
 
-            redirectToAdminPage() {
+        redirectToAdminPage() {
             // Aquí redireccionas a la página del sistema de administración
             // por ejemplo, mediante router.push('/admin') si estás usando Vue Router
-            },
-            proceedToQuestions() {
-                this.showPersonalInfo = false;
-                this.showQuestionnaire = true;
-                this.getQuestions();
-            },
-            nextQuestion() {
-                this.currentQuestionIndex++;
-            },
-            prevQuestion() {
-                this.currentQuestionIndex--;
-            },
-            submitForm() {
-                // Combine questions and answers into an object
-                const userResponse = {
-                    personalInfo: {
+        },
+        proceedToQuestions() {
+            this.showPersonalInfo = false;
+            this.showQuestionnaire = true;
+            this.getQuestions();
+        },
+        nextQuestion() {
+            this.currentQuestionIndex++;
+        },
+        prevQuestion() {
+            this.currentQuestionIndex--;
+        },
+        submitForm() {
+            // Combine questions and answers into an object
+            const userResponse = {
+                personalInfo: {
                     firstName: this.firstName,
                     lastName: this.lastName,
                     dni: this.dni,
                     email: this.email,
-                    },
-                    answers: this.answers,
-                };
+                },
+                answers: this.answers,
+            };
 
-                // Send the userResponse object to your server or process it as needed
-                console.log(userResponse);
+            // Send the userResponse object to your server or process it as needed
+            console.log(userResponse);
 
-                // Clear the form after submission
-                this.reset();
-            },
-            async getQuestions() {
-                const vm = this;
-                try {
-                    let response = await axios.get("get-questions");
-                    vm.questions = response.data.questions;
-                    console.log(vm.questions);
-                } catch (error) {
-                    console.log(error);
-                }
-            },
-            adminLogin() {
-                // Aquí implementas la lógica para verificar el inicio de sesión del administrador.
-                // Por ejemplo, puedes comparar el usuario y la clave ingresados con los valores correctos.
-                // Si el inicio de sesión es exitoso, puedes redirigir al administrador a la página de acciones de admin.
-                // Por ejemplo, mediante router.push('/admin-actions') si estás usando Vue Router.
+            // Clear the form after submission
+            this.reset();
+        },
+        async getQuestions() {
+            const vm = this;
+            try {
+                let response = await axios.get("get-questions");
+                vm.questions = response.data.questions;
+                console.log(vm.questions);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        adminLogin() {
+            // Aquí implementas la lógica para verificar el inicio de sesión del administrador.
+            // Por ejemplo, puedes comparar el usuario y la clave ingresados con los valores correctos.
+            // Si el inicio de sesión es exitoso, puedes redirigir al administrador a la página de acciones de admin.
+            // Por ejemplo, mediante router.push('/admin-actions') si estás usando Vue Router.
 
-                // Luego de completar el formulario de inicio de sesión, reseteamos los valores
-                // y mostramos el formulario de información personal o el cuestionario.
-                this.adminUsername = '';
-                this.adminPassword = '';
-                this.showAdminLogin = true;
-                this.showPresentation = false;
-            },
-            goToDataSet() {
-                this.showAdminLogin = false;
-                this.showAdminActions = true;
-            },
-            async downloadDataset() {
-                const vm = this;
-                try {
-                    await axios.get("data-set/export");
-                    local.refece
-                    console.log('Download');
-                } catch (error) {
-                    console.log(error);
-                }
-            },
-            reset() {
-                this.answers = [];
-                this.firstName = "";
-                this.lastName = "";
-                this.dni = "";
-                this.email = "";
-                this.selectedOptions = [];
-                this.currentQuestionIndex = 0;
-                this.showPresentation = true;
-                this.showPersonalInfo = false;
-                this.showQuestionnaire = false;
-                this.showAdminLogin = false;
-            },
+            // Luego de completar el formulario de inicio de sesión, reseteamos los valores
+            // y mostramos el formulario de información personal o el cuestionario.
+            this.adminUsername = '';
+            this.adminPassword = '';
+            this.showAdminLogin = true;
+            this.showPresentation = false;
         },
-        async created() {
-            // const vm = this;
-            // try {
-            //     let response = await axios.get("get-questions");
-            //     vm.questions = response.data.questions;
-            //     console.log(vm.questions);
-            // } catch (error) {
-            //     console.log(error);
-            // }
+        goToDataSet() {
+            this.showAdminLogin = false;
+            this.showAdminActions = true;
         },
-        computed: {
-            currentQuestion() {
-                return this.questions[this.currentQuestionIndex];
-            },
-            isOptionSelected() {
-                // Check if an option is selected for the current question
-                return this.selectedOptions[this.currentQuestionIndex] !== undefined;
-            },
+        async downloadDataset() {
+            const vm = this;
+            try {
+                await axios.get("data-set/export");
+                local.refece
+                console.log('Download');
+            } catch (error) {
+                console.log(error);
+            }
         },
-    };
+        reset() {
+            this.answers = [];
+            this.firstName = "";
+            this.lastName = "";
+            this.dni = "";
+            this.email = "";
+            this.selectedOptions = [];
+            this.currentQuestionIndex = 0;
+            this.showPresentation = true;
+            this.showPersonalInfo = false;
+            this.showQuestionnaire = false;
+            this.showAdminLogin = false;
+        },
+    },
+    async created() {
+        // const vm = this;
+        // try {
+        //     let response = await axios.get("get-questions");
+        //     vm.questions = response.data.questions;
+        //     console.log(vm.questions);
+        // } catch (error) {
+        //     console.log(error);
+        // }
+    },
+    computed: {
+        currentQuestion() {
+            return this.questions[this.currentQuestionIndex];
+        },
+        isOptionSelected() {
+            // Check if an option is selected for the current question
+            return this.selectedOptions[this.currentQuestionIndex] !== undefined;
+        },
+    },
+};
 </script>
 
 <style>
-    /* Estilos para el componente Vue */
-    .opciones input[type="radio"] {
-        display: none;
-    }
+/* Estilos para el componente Vue */
+.opciones input[type="radio"] {
+    display: none;
+}
 
-    .opciones label {
-        display: block;
-        padding: 10px;
-        background-color: #f8f9fa;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+.opciones label {
+    display: block;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
-    .opciones label:hover {
-        background-color: #e9ecef;
-    }
+.opciones label:hover {
+    background-color: #e9ecef;
+}
 
-    .opciones input[type="radio"]:checked + label {
-        background-color: #0d6efd;
-        color: #fff;
-    }
+.opciones input[type="radio"]:checked+label {
+    background-color: #0d6efd;
+    color: #fff;
+}
 </style>
