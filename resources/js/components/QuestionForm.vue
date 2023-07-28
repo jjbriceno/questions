@@ -2,15 +2,17 @@
     <div class="container mt-5 d-flex justify-content-center">
         <div class="col-md-6">
             <!-- Vista de presentación -->
-            <div v-if="showPresentation">
+            <!-- Section 1 -->
+            <!-- <div v-if="showPresentation">
                 <h1 class="text-center">Bienvenido a la recolección de datos de los estudiantes de primaria</h1>
                 <div class="d-flex justify-content-center mt-3">
                 <button class="btn btn-primary mx-2" @click="proceedToQuestionnaire">Ir al cuestionario</button>
                 <button class="btn btn-primary mx-2" @click="adminLogin">Entrar al sistema como Admin</button>
                 </div>
-            </div>
+            </div> -->
             <!-- Vista de inicio de sesión para el administrador -->
-            <div v-if="showAdminLogin">
+            <!-- Section 2 -->
+            <!-- <div v-if="showAdminLogin">
                 <form @submit.prevent="adminLogin">
                     <div class="card">
                         <div class="card-header d-flex justify-content-center">
@@ -32,8 +34,9 @@
                         <button type="submit" @click="goToDataSet" class="btn btn-primary">Iniciar sesión</button>
                     </div>
                 </form>
-            </div>
+            </div> -->
             <!-- downloadDataset -->
+            <!-- Section 3 -->
             <div v-if="showAdminActions">
                 <h2 class="text-center">Acciones del Administrador</h2>
                 <p class="text-center">¿Desea descargar el Dataset?</p>
@@ -51,9 +54,10 @@
                 </div>
             </div>
 
-            <div v-if="showPersonalInfo">
+            <!-- Section 4 -->
+            <!-- <div v-if="showPersonalInfo"> -->
                 <!-- Personal Information Form -->
-                <form @submit.prevent="proceedToQuestions">
+                <!-- <form @submit.prevent="proceedToQuestions">
                     <div class="card">
                         <div class="card-header d-flex justify-content-center">
                             <h2 class="card-title">Información personal</h2>
@@ -95,8 +99,9 @@
                         <button type="submit" class="btn btn-primary">Siguiente</button>
                     </div>
                 </form>
-            </div>
+            </div> -->
 
+            <!-- Section 5 -->
             <div v-if="showQuestionnaire">
                 <!-- Questionnaire -->
                 <form @submit.prevent="submitForm">

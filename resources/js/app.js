@@ -6,7 +6,25 @@
 
 import './bootstrap';
 
-window.Vue = require('vue').default;
+import Vue from 'vue';
+
+import VueRouter from 'vue-router';
+
+import App from './App.vue';
+
+import PresentationComponent from './components/PresentationComponent.vue';
+
+import AdminLoginComponent from './components/AdminLoginComponent.vue';
+
+import PersonalInfoComponent from './components/PersonalInfoComponent.vue';
+
+import QuestionnaireComponent from './components/QuestionnaireComponent.vue';
+
+import AdminActionsComponent from './components/AdminActionsComponent.vue';
+
+Vue.use(VueRouter);
+
+// window.Vue = require('vue').default;
 
 /**
  * The following block of code may be used to automatically register your
@@ -19,7 +37,7 @@ window.Vue = require('vue').default;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Vue.component('App', require('./App.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -27,6 +45,23 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+const router = new VueRouter({
+    routes: [
+        { path: '/', redirect: '/presentation' },
+        { path: '/presentation', component: PresentationComponent },
+        { path: '/admin-login', component: AdminLoginComponent },
+        { path: '/admin-actions', component: AdminActionsComponent },
+        { path: '/personal-info', component: PersonalInfoComponent },
+        { path: '/questionnaire', component: QuestionnaireComponent },
+        // Add other routes for other components if needed
+    ],
+});
+
+
 const app = new Vue({
     el: '#app',
+    components: {
+        App
+    },
+    router
 });

@@ -1,5 +1,5 @@
 <div id="app">
-    <example-component></example-component>
+    <App></App>
 </div>
 
 <head>
