@@ -34,10 +34,11 @@
                 </button>
                 <button v-if="currentQuestionIndex < questions.length - 1" type="button" class="btn btn-primary"
                     @click="nextQuestion" :disabled="!isOptionSelected">
-                    Siguiente
+                    Siguiente {{ currentQuestionIndex }}
                 </button>
-                <button v-if="currentQuestionIndex === questions.length - 1" type="submit" class="btn btn-primary">
-                    Enviar
+                <button v-if="currentQuestionIndex === questions.length - 1" type="button" class="btn btn-primary"
+                    @click="submitForm" :disabled="!isOptionSelected">
+                    Enviar 
                 </button>
             </div>
         </form>
@@ -46,6 +47,9 @@
   
 <script>
 export default {
+    props : {
+        id : Number,
+    },
     data() {
         return {
             questions: [],
@@ -69,8 +73,7 @@ export default {
 
         submitForm() {
             // Combine questions and answers into an object
-            const answers = this.answers;
-
+            const answers = this.selectedOptions;
             // Send the userResponse object to your server or process it as needed
             console.log(answers);
 
@@ -85,6 +88,7 @@ export default {
         },
         isOptionSelected() {
             // Check if an option is selected for the current question
+            console.log(this.currentQuestionIndex);
             return this.selectedOptions[this.currentQuestionIndex] !== undefined;
         },
     },
@@ -92,42 +96,38 @@ export default {
     async created() {
         const vm = this;
         try {
-            await axios.get("get-questions")
-            .then(response => {
-                vm.questions = response.data.questions;
-            })
-            .catch(error => {
-                console.error(error);
-            });
-            console.log(vm.questions);
+            let response = await axios.get("get-questions");
+            vm.questions = response.data.questions;
         } catch (error) {
             console.log(error);
         }
+
+        vm.id = this.$route.params.id;
     },
 };
 </script>
 
 <style>
-    /* Estilos para el componente Vue */
-    .opciones input[type="radio"] {
-        display: none;
-    }
+/* Estilos para el componente Vue */
+.opciones input[type="radio"] {
+    display: none;
+}
 
-    .opciones label {
-        display: block;
-        padding: 10px;
-        background-color: #f8f9fa;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+.opciones label {
+    display: block;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
-    .opciones label:hover {
-        background-color: #e9ecef;
-    }
+.opciones label:hover {
+    background-color: #e9ecef;
+}
 
-    .opciones input[type="radio"]:checked + label {
-        background-color: #0d6efd;
-        color: #fff;
-    }
+.opciones input[type="radio"]:checked+label {
+    background-color: #0d6efd;
+    color: #fff;
+}
 </style>
   

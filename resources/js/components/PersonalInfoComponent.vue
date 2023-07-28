@@ -3,7 +3,7 @@
         <!-- Section 4 -->
         <!-- ... Content for Section 4 ... -->
         <!-- Personal Information Form -->
-        <form @submit.prevent="proceedToQuestions">
+        <form>
             <div class="card">
                 <div class="card-header d-flex justify-content-center text-white bg-primary">
                     <h2 class="card-title">Información personal</h2>
@@ -33,7 +33,7 @@
             </div>
 
             <div class="mt-3 d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary" @click="proceedToQuestions">Siguiente</button>
+                <button type="button" class="btn btn-primary" @click="submitForm">Siguiente</button>
             </div>
         </form>
     </div>
@@ -50,9 +50,9 @@ export default {
         };
     },
     methods: {
-        proceedToQuestions() {
+        proceedToQuestions(user_id) {
             // ... Proceed to questionnaire logic ...
-            this.$router.push('/questionnaire');
+            this.$router.push(`/questionnaire/${user_id}`);
         },
 
         reset() {
@@ -62,23 +62,22 @@ export default {
             this.email = "";
         },
 
-        submitForm() {
-                // Combine questions and answers into an object
-                const userResponse = {
-                    personalInfo: {
+        async submitForm() {
+            // Combine questions and answers into an object
+            const userResponse =  {
                     firstName: this.firstName,
                     lastName: this.lastName,
                     dni: this.dni,
                     email: this.email,
-                    },
-                };
-
-                // Send the userResponse object to your server or process it as needed
-                console.log(userResponse);
-
-                // Clear the form after submission
-                this.reset();
-            },
+            };
+            // Send the userResponse object to your server or process it as needed
+            let user_id = await axios.post('store-user', userResponse);
+            console.log(userResponse);
+            
+            this.proceedToQuestions(user_id);
+            // Clear the form after submission
+            this.reset();
+        },
     },
 };
 </script>

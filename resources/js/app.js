@@ -52,7 +52,7 @@ const router = new VueRouter({
         { path: '/admin-login', component: AdminLoginComponent },
         { path: '/admin-actions', component: AdminActionsComponent },
         { path: '/personal-info', component: PersonalInfoComponent },
-        { path: '/questionnaire', component: QuestionnaireComponent },
+        { path: '/questionnaire/:id', component: QuestionnaireComponent },
         // Add other routes for other components if needed
     ],
 });

@@ -36,19 +36,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->toArray());
         $this->validate($request, [
-            'name'          => ['required'],
-            'last_name'     => ['required'],
-            'dni'           => ['required'],
-            'email'         => ['required'],
+            'firstName'         => ['required'],
+            'lastName'          => ['required'],
+            'dni'               => ['required'],
+            'email'             => ['required'],
         ]);
 
         $user = User::create(
             [
-                'name'          => $request->name,
-                'last_name'     => $request->last_name,
+                'name'          => $request->firstName,
+                'last_name'     => $request->lastName,
                 'dni'           => $request->dni,
                 'email'         => $request->email,
+                'password'      => '123456'
             ]
         );
 
