@@ -5137,7 +5137,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       firstName: "",
       lastName: "",
       dni: "",
-      email: ""
+      email: "",
+      errors: {}
     };
   },
   methods: {
@@ -5165,19 +5166,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 dni: _this.dni,
                 email: _this.email
               }; // Send the userResponse object to your server or process it as needed
-              _context.next = 3;
+              _context.prev = 1;
+              _context.next = 4;
               return axios.post('store-user', userResponse);
-            case 3:
+            case 4:
               user_id = _context.sent;
               console.log(userResponse);
               _this.proceedToQuestions(user_id);
+              _context.next = 12;
+              break;
+            case 9:
+              _context.prev = 9;
+              _context.t0 = _context["catch"](1);
+              _this.errors = _context.t0.response.data.errors;
+            case 12:
               // Clear the form after submission
               _this.reset();
-            case 7:
+            case 13:
             case "end":
               return _context.stop();
           }
-        }, _callee);
+        }, _callee, null, [[1, 9]]);
       }))();
     }
   }
@@ -5525,7 +5534,9 @@ var render = function render() {
         _vm.firstName = $event.target.value;
       }
     }
-  })]), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _vm.errors.firstName && _vm.firstName === "" ? _c("p", {
+    staticClass: "text-danger"
+  }, [_c("b", [_vm._v(_vm._s(_vm.errors.firstName[0]))])]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_c("label", [_vm._v("Apellido(s)")]), _vm._v(" "), _c("input", {
     directives: [{
@@ -5547,7 +5558,9 @@ var render = function render() {
         _vm.lastName = $event.target.value;
       }
     }
-  })]), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _vm.errors.lastName && _vm.lastName === "" ? _c("p", {
+    staticClass: "text-danger"
+  }, [_c("b", [_vm._v(_vm._s(_vm.errors.lastName[0]))])]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_c("label", [_vm._v("Cédula")]), _vm._v(" "), _c("input", {
     directives: [{
@@ -5572,7 +5585,9 @@ var render = function render() {
         _vm.dni = $event.target.value;
       }
     }
-  })]), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _vm.errors.dni && _vm.dni === "" ? _c("p", {
+    staticClass: "text-danger"
+  }, [_c("b", [_vm._v(_vm._s(_vm.errors.dni[0]))])]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_c("label", [_vm._v("Email")]), _vm._v(" "), _c("input", {
     directives: [{
@@ -5597,7 +5612,9 @@ var render = function render() {
         _vm.email = $event.target.value;
       }
     }
-  })])])]), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _vm.errors.email && _vm.email === "" ? _c("p", {
+    staticClass: "text-danger"
+  }, [_c("b", [_vm._v(_vm._s(_vm.errors.email[0]))])]) : _vm._e()])])]), _vm._v(" "), _c("div", {
     staticClass: "mt-3 d-flex justify-content-end"
   }, [_c("button", {
     staticClass: "btn btn-primary",

@@ -12,22 +12,34 @@
                     <div class="form-group">
                         <label>Nombre(s)</label>
                         <input v-model="firstName" class="form-control" required />
+                        <p v-if="errors.firstName && firstName === ''" class="text-danger">
+                            <b>{{ errors.firstName[0] }}</b>
+                        </p>
                     </div>
 
                     <div class="form-group">
                         <label>Apellido(s)</label>
                         <input v-model="lastName" class="form-control" required />
+                        <p v-if="errors.lastName && lastName === ''" class="text-danger">
+                            <b>{{ errors.lastName[0] }}</b>
+                        </p>
                     </div>
 
                     <div class="form-group">
                         <label>Cédula</label>
                         <input type="text" onkeypress="return event.charCode>=48 && event.charCode<=57" class="form-control"
                             size="9" v-model="dni" required />
+                        <p v-if="errors.dni && dni === ''" class="text-danger">
+                            <b>{{ errors.dni[0] }}</b>
+                        </p>
                     </div>
 
                     <div class="form-group">
                         <label>Email</label>
                         <input type="email" v-model="email" pattern=".+@.+\.com" size="30" class="form-control" required />
+                        <p v-if="errors.email && email === ''" class="text-danger">
+                            <b>{{ errors.email[0] }}</b>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -47,6 +59,7 @@ export default {
             lastName: "",
             dni: "",
             email: "",
+            errors: {}
         };
     },
     methods: {
@@ -64,17 +77,21 @@ export default {
 
         async submitForm() {
             // Combine questions and answers into an object
-            const userResponse =  {
-                    firstName: this.firstName,
-                    lastName: this.lastName,
-                    dni: this.dni,
-                    email: this.email,
+            const userResponse = {
+                firstName: this.firstName,
+                lastName: this.lastName,
+                dni: this.dni,
+                email: this.email,
             };
             // Send the userResponse object to your server or process it as needed
-            let user_id = await axios.post('store-user', userResponse);
-            console.log(userResponse);
-            
-            this.proceedToQuestions(user_id);
+            try {
+                let user_id = await axios.post('store-user', userResponse);
+                console.log(userResponse);
+                this.proceedToQuestions(user_id);
+            } catch (error) {
+                this.errors = error.response.data.errors;
+            }
+
             // Clear the form after submission
             this.reset();
         },
