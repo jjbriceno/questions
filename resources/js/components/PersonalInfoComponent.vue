@@ -19,7 +19,8 @@
 
                     <div class="form-group">
                         <label>Apellido(s)</label>
-                        <input v-model="lastName" class="form-control" required />
+                        <input v-model="lastName" class="form-control"
+                            :style="errors.lastName ? 'border-color:red' : ''" required />
                         <p v-if="errors.lastName && lastName === ''" class="text-danger">
                             <b>{{ errors.lastName[0] }}</b>
                         </p>
@@ -36,7 +37,8 @@
 
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" v-model="email" pattern=".+@.+\.com" size="30" class="form-control" required />
+                        <input type="email" v-model="email" pattern=".+@.+\.com" size="30" class="form-control"
+                            required />
                         <p v-if="errors.email && email === ''" class="text-danger">
                             <b>{{ errors.email[0] }}</b>
                         </p>
@@ -98,4 +100,10 @@ export default {
     },
 };
 </script>
+
+<style>
+.input--error {
+    border-color: red;
+}
+</style>
   
