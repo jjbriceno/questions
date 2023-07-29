@@ -52,9 +52,15 @@ const router = new VueRouter({
         { path: '/admin-login', component: AdminLoginComponent },
         { path: '/admin-actions', component: AdminActionsComponent },
         { path: '/personal-info', component: PersonalInfoComponent },
-        { path: '/questionnaire/:id', component: QuestionnaireComponent },
-        // Add other routes for other components if needed
+        { path: '/questionnaire/:id', name: 'questionnaire', component: QuestionnaireComponent },
     ],
+});
+
+router.beforeEach(async (to, from, next) => {
+    if (from.fullPath.split('/').length === 3 && to.fullPath == '/personal-info') {
+        next(from.fullPath);
+    }
+    next();
 });
 
 

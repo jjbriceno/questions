@@ -11,8 +11,7 @@
                 <div class="card-body">
                     <div class="form-group pb-3">
                         <label>Nombre(s)</label>
-                        <input v-model="firstName" class="form-control"
-                            placeholder="Nombre(s)"
+                        <input v-model="firstName" class="form-control" placeholder="Nombre(s)"
                             :style="errors.error.firstName && (firstName === '' || errors.inputs.firstName) ? 'border-color: red' : ''" />
                         <p v-if="errors.error.firstName" class="text-danger">
                             <b>{{ errors.inputs.firstName === firstName || firstName === '' ? errors.error.firstName[0] : ''
@@ -21,8 +20,7 @@
                     </div>
                     <div class="form-group pb-3">
                         <label>Apellido(s)</label>
-                        <input v-model="lastName" class="form-control"
-                            placeholder="Apellidos(s)"
+                        <input v-model="lastName" class="form-control" placeholder="Apellidos(s)"
                             :style="errors.error.lastName && lastName === '' ? 'border-color: red' : ''" />
                         <p v-if="errors.error.lastName" class="text-danger">
                             <b>{{ errors.inputs.lastName === lastName || lastName === '' ? errors.error.lastName[0] : ''
@@ -32,8 +30,7 @@
                     <div class="form-group pb-3">
                         <label>Cédula</label>
                         <input type="text" onkeypress="return event.charCode>=48 && event.charCode<=57" class="form-control"
-                            v-model="dni"
-                            placeholder="Cédula"
+                            v-model="dni" placeholder="Cédula"
                             :style="errors.error.dni && (dni === '' || errors.inputs.dni === dni) ? 'border-color: red' : ''" />
                         <p v-if="errors.error.dni" class="text-danger">
                             <b>{{ errors.inputs.dni === dni || dni === '' ? errors.error.dni[0] : ''
