@@ -12,27 +12,43 @@
                     <div class="form-group pb-3">
                         <label>Nombre(s)</label>
                         <input v-model="firstName" class="form-control"
-                            :placeholder="firstName === '' ? (errors.error.firstName ? errors.error.firstName[0] : 'Nombre(s)') : 'Nombre(s)'"
+                            placeholder="Nombre(s)"
                             :style="errors.error.firstName && (firstName === '' || errors.inputs.firstName) ? 'border-color: red' : ''" />
+                        <p v-if="errors.error.firstName" class="text-danger">
+                            <b>{{ errors.inputs.firstName === firstName || firstName === '' ? errors.error.firstName[0] : ''
+                            }}</b>
+                        </p>
                     </div>
                     <div class="form-group pb-3">
                         <label>Apellido(s)</label>
                         <input v-model="lastName" class="form-control"
-                            :placeholder="lastName === '' ? (errors.error.lastName ? errors.error.lastName[0] : 'Apellidos(s)') : 'Apellidos(s)'"
+                            placeholder="Apellidos(s)"
                             :style="errors.error.lastName && lastName === '' ? 'border-color: red' : ''" />
+                        <p v-if="errors.error.lastName" class="text-danger">
+                            <b>{{ errors.inputs.lastName === lastName || lastName === '' ? errors.error.lastName[0] : ''
+                            }}</b>
+                        </p>
                     </div>
                     <div class="form-group pb-3">
                         <label>Cédula</label>
                         <input type="text" onkeypress="return event.charCode>=48 && event.charCode<=57" class="form-control"
                             v-model="dni"
-                            :placeholder="dni === '' ? (errors.error.dni ? errors.error.dni[0] : 'Cédula') : 'Cédula'"
+                            placeholder="Cédula"
                             :style="errors.error.dni && (dni === '' || errors.inputs.dni === dni) ? 'border-color: red' : ''" />
+                        <p v-if="errors.error.dni" class="text-danger">
+                            <b>{{ errors.inputs.dni === dni || dni === '' ? errors.error.dni[0] : ''
+                            }}</b>
+                        </p>
                     </div>
                     <div class="form-group pb-3">
                         <label>Email</label>
                         <input type="email" v-model="email" pattern=".+@.+\.com" size="100" class="form-control"
-                            :placeholder="email === '' ? (errors.error.email ? errors.error.email[0] : 'Email') : 'Email'"
+                            placeholder="Email"
                             :style="errors.error.email && (email === '' || errors.inputs.email === email) ? 'border-color: red' : ''" />
+                        <p v-if="errors.error.email" class="text-danger">
+                            <b>{{ errors.inputs.email === email || email === '' ? errors.error.email[0] : ''
+                            }}</b>
+                        </p>
                     </div>
                 </div>
             </div>

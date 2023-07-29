@@ -5603,7 +5603,7 @@ var render = function render() {
     staticClass: "form-control",
     style: _vm.errors.error.firstName && (_vm.firstName === "" || _vm.errors.inputs.firstName) ? "border-color: red" : "",
     attrs: {
-      placeholder: _vm.firstName === "" ? _vm.errors.error.firstName ? _vm.errors.error.firstName[0] : "Nombre(s)" : "Nombre(s)"
+      placeholder: "Nombre(s)"
     },
     domProps: {
       value: _vm.firstName
@@ -5614,7 +5614,9 @@ var render = function render() {
         _vm.firstName = $event.target.value;
       }
     }
-  })]), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _vm.errors.error.firstName ? _c("p", {
+    staticClass: "text-danger"
+  }, [_c("b", [_vm._v(_vm._s(_vm.errors.inputs.firstName === _vm.firstName || _vm.firstName === "" ? _vm.errors.error.firstName[0] : ""))])]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "form-group pb-3"
   }, [_c("label", [_vm._v("Apellido(s)")]), _vm._v(" "), _c("input", {
     directives: [{
@@ -5626,7 +5628,7 @@ var render = function render() {
     staticClass: "form-control",
     style: _vm.errors.error.lastName && _vm.lastName === "" ? "border-color: red" : "",
     attrs: {
-      placeholder: _vm.lastName === "" ? _vm.errors.error.lastName ? _vm.errors.error.lastName[0] : "Apellidos(s)" : "Apellidos(s)"
+      placeholder: "Apellidos(s)"
     },
     domProps: {
       value: _vm.lastName
@@ -5637,7 +5639,9 @@ var render = function render() {
         _vm.lastName = $event.target.value;
       }
     }
-  })]), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _vm.errors.error.lastName ? _c("p", {
+    staticClass: "text-danger"
+  }, [_c("b", [_vm._v(_vm._s(_vm.errors.inputs.lastName === _vm.lastName || _vm.lastName === "" ? _vm.errors.error.lastName[0] : ""))])]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "form-group pb-3"
   }, [_c("label", [_vm._v("Cédula")]), _vm._v(" "), _c("input", {
     directives: [{
@@ -5651,7 +5655,7 @@ var render = function render() {
     attrs: {
       type: "text",
       onkeypress: "return event.charCode>=48 && event.charCode<=57",
-      placeholder: _vm.dni === "" ? _vm.errors.error.dni ? _vm.errors.error.dni[0] : "Cédula" : "Cédula"
+      placeholder: "Cédula"
     },
     domProps: {
       value: _vm.dni
@@ -5662,7 +5666,9 @@ var render = function render() {
         _vm.dni = $event.target.value;
       }
     }
-  })]), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _vm.errors.error.dni ? _c("p", {
+    staticClass: "text-danger"
+  }, [_c("b", [_vm._v(_vm._s(_vm.errors.inputs.dni === _vm.dni || _vm.dni === "" ? _vm.errors.error.dni[0] : ""))])]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "form-group pb-3"
   }, [_c("label", [_vm._v("Email")]), _vm._v(" "), _c("input", {
     directives: [{
@@ -5677,7 +5683,7 @@ var render = function render() {
       type: "email",
       pattern: ".+@.+\\.com",
       size: "100",
-      placeholder: _vm.email === "" ? _vm.errors.error.email ? _vm.errors.error.email[0] : "Email" : "Email"
+      placeholder: "Email"
     },
     domProps: {
       value: _vm.email
@@ -5688,7 +5694,9 @@ var render = function render() {
         _vm.email = $event.target.value;
       }
     }
-  })])])]), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _vm.errors.error.email ? _c("p", {
+    staticClass: "text-danger"
+  }, [_c("b", [_vm._v(_vm._s(_vm.errors.inputs.email === _vm.email || _vm.email === "" ? _vm.errors.error.email[0] : ""))])]) : _vm._e()])])]), _vm._v(" "), _c("div", {
     staticClass: "mt-3 d-flex justify-content-end"
   }, [_c("button", {
     staticClass: "btn btn-primary",
