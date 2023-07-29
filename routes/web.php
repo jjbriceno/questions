@@ -26,6 +26,7 @@ Route::get('/', function () {
 
 Route::get('/get-questions', [QuestionController::class, 'index']);
 
-Route::get('data-set/export', [DataSetController::class, 'export']);
-
 Route::post('store-user', [UserController::class, 'store']);
+
+Route::post('data-set/store', [DataSetController::class, 'store']);
+Route::get('data-set/export', [DataSetController::class, 'export']);

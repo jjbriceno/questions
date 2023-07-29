@@ -45,23 +45,25 @@ class DataSetController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'question_id'       => ['required'],
+            // 'question_id'       => ['required'],
             'user_id'           => ['required'],
-            'user_answer'       => ['required'],
+            'user_answers.*'       => ['required'],
         ]);
 
-        $question       = Question::find($request->question_id);
         $user_id        = User::find($request->user_id)->id ?? 1;
-        $data_set       = DataSet::create(
+        foreach ($request->user_answers as $question_id => $user_answer) {
+            $question       = Question::find($question_id + 1);
+            $data_set       = DataSet::create(
             [
                 'category_id'       => $question->category_id,
                 'question_id'       => $question->id,
                 'user_id'           => $user_id,
-                'user_answer'       => $request->user_answer,
+                'user_answer'       => $user_answer,
                 'correct_answer'    => $question->answer,
-                'output'            => $request->user_answer == $question->answer,
-            ]
-        );
+                'output'            => $user_answer == $question->answer,
+                ]
+            );
+        }
 
         return response()->json(['data_set' => $data_set], Response::HTTP_CREATED);
     }

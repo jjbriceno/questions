@@ -2,7 +2,7 @@
     <div class="col-md-6">
         <!-- Section 5 -->
         <!-- ... Content for Section 5 ... -->
-        <form @submit.prevent="submitForm">
+        <form>
             <div class="card">
                 <div class="card-header d-flex justify-content-center text-white bg-primary">
                     <h2 class="card-title">Cuestionario de Matemáticas</h2>
@@ -44,17 +44,15 @@
         </form>
     </div>
 </template>
-  
+
 <script>
 export default {
-    props: {
-        id: Number,
-    },
     data() {
         return {
             questions: [],
             selectedOptions: [],
             currentQuestionIndex: 0,
+            user_id: '',
         };
     },
     methods: {
@@ -71,14 +69,22 @@ export default {
             this.currentQuestionIndex--;
         },
 
-        submitForm() {
+        async submitForm() {
             // Combine questions and answers into an object
-            const answers = this.selectedOptions;
+            const userResponse = {
+                user_id : this.user_id,
+                user_answers : this.selectedOptions
+            };
             // Send the userResponse object to your server or process it as needed
-            console.log(answers);
-
-            // Clear the form after submission
-            this.reset();
+            try {
+                let response = await axios.post('data-set/store', userResponse);
+                let user_data_set = response.data.data_set;
+                // Clear the form after submission
+                this.reset();
+            } catch (error) {
+                console.log(error);
+                this.errors = error.response.data.errors;
+            }
         },
     },
 
@@ -88,7 +94,6 @@ export default {
         },
         isOptionSelected() {
             // Check if an option is selected for the current question
-            console.log(this.currentQuestionIndex);
             return this.selectedOptions[this.currentQuestionIndex] !== undefined;
         },
     },
@@ -101,8 +106,8 @@ export default {
         } catch (error) {
             console.log(error);
         }
-
-        vm.id = this.$route.params.id;
+        console.log(this.$route.params.id);
+        vm.user_id = parseInt(this.$route.params.id);
     },
 };
 </script>

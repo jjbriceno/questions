@@ -5180,11 +5180,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     submitForm: function submitForm() {
+<<<<<<< HEAD
       var _this3 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
         var vm, userResponse, user_id;
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) switch (_context3.prev = _context3.next) {
+=======
+      var _this = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var userResponse, response, user_id;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+>>>>>>> b8a7df6 (Improved dataset storage logic)
             case 0:
               // Combine questions and answers into an object
               vm = _this3;
@@ -5200,6 +5208,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _context3.prev = 4;
               _context3.next = 7;
               return axios.post('store-user', userResponse);
+<<<<<<< HEAD
             case 7:
               user_id = _context3.sent;
               console.log(userResponse);
@@ -5213,10 +5222,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _context3.t0 = _context3["catch"](4);
               vm.errors = _context3.t0.response.data.errors;
             case 16:
+=======
+            case 4:
+              response = _context.sent;
+              user_id = response.data.user.id;
+              console.log(user_id, userResponse);
+              _this.proceedToQuestions(user_id);
+              _context.next = 13;
+              break;
+            case 10:
+              _context.prev = 10;
+              _context.t0 = _context["catch"](1);
+              _this.errors = _context.t0.response.data.errors;
+            case 13:
+              // Clear the form after submission
+              _this.reset();
+            case 14:
+>>>>>>> b8a7df6 (Improved dataset storage logic)
             case "end":
               return _context3.stop();
           }
+<<<<<<< HEAD
         }, _callee3, null, [[4, 13]]);
+=======
+        }, _callee, null, [[1, 10]]);
+>>>>>>> b8a7df6 (Improved dataset storage logic)
       }))();
     }
   }
@@ -5270,14 +5300,12 @@ function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyri
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: {
-    id: Number
-  },
   data: function data() {
     return {
       questions: [],
       selectedOptions: [],
-      currentQuestionIndex: 0
+      currentQuestionIndex: 0,
+      user_id: ''
     };
   },
   methods: {
@@ -5293,13 +5321,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.currentQuestionIndex--;
     },
     submitForm: function submitForm() {
-      // Combine questions and answers into an object
-      var answers = this.selectedOptions;
-      // Send the userResponse object to your server or process it as needed
-      console.log(answers);
-
-      // Clear the form after submission
-      this.reset();
+      var _this = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var userResponse, response, user_data_set;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              // Combine questions and answers into an object
+              userResponse = {
+                user_id: _this.user_id,
+                user_answers: _this.selectedOptions
+              }; // Send the userResponse object to your server or process it as needed
+              _context.prev = 1;
+              _context.next = 4;
+              return axios.post('data-set/store', userResponse);
+            case 4:
+              response = _context.sent;
+              user_data_set = response.data.data_set;
+              console.log(userResponse, user_data_set);
+              // Clear the form after submission
+              _this.reset();
+              _context.next = 14;
+              break;
+            case 10:
+              _context.prev = 10;
+              _context.t0 = _context["catch"](1);
+              console.log(_context.t0);
+              _this.errors = _context.t0.response.data.errors;
+            case 14:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[1, 10]]);
+      }))();
     }
   },
   computed: {
@@ -5308,37 +5362,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     isOptionSelected: function isOptionSelected() {
       // Check if an option is selected for the current question
-      console.log(this.currentQuestionIndex);
       return this.selectedOptions[this.currentQuestionIndex] !== undefined;
     }
   },
   created: function created() {
-    var _this = this;
-    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+    var _this2 = this;
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
       var vm, response;
-      return _regeneratorRuntime().wrap(function _callee$(_context) {
-        while (1) switch (_context.prev = _context.next) {
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
           case 0:
-            vm = _this;
-            _context.prev = 1;
-            _context.next = 4;
+            vm = _this2;
+            _context2.prev = 1;
+            _context2.next = 4;
             return axios.get("get-questions");
           case 4:
-            response = _context.sent;
+            response = _context2.sent;
             vm.questions = response.data.questions;
-            _context.next = 11;
+            _context2.next = 11;
             break;
           case 8:
-            _context.prev = 8;
-            _context.t0 = _context["catch"](1);
-            console.log(_context.t0);
+            _context2.prev = 8;
+            _context2.t0 = _context2["catch"](1);
+            console.log(_context2.t0);
           case 11:
-            vm.id = _this.$route.params.id;
-          case 12:
+            console.log(_this2.$route.params.id);
+            vm.user_id = parseInt(_this2.$route.params.id);
+          case 13:
           case "end":
-            return _context.stop();
+            return _context2.stop();
         }
-      }, _callee, null, [[1, 8]]);
+      }, _callee2, null, [[1, 8]]);
     }))();
   }
 });
@@ -5725,14 +5779,7 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "col-md-6"
-  }, [_c("form", {
-    on: {
-      submit: function submit($event) {
-        $event.preventDefault();
-        return _vm.submitForm.apply(null, arguments);
-      }
-    }
-  }, [_c("div", {
+  }, [_c("form", [_c("div", {
     staticClass: "card"
   }, [_vm._m(0), _vm._v(" "), _vm.currentQuestion ? _c("div", {
     staticClass: "card-body"
@@ -43912,7 +43959,7 @@ Vue.compile = compileToFunctions;
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"Promise based HTTP client for the browser and node.js","main":"index.js","scripts":{"test":"grunt test","start":"node ./sandbox/server.js","build":"NODE_ENV=production grunt build","preversion":"npm test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json","postversion":"git push && git push --tags","examples":"node ./examples/server.js","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","fix":"eslint --fix lib/**/*.js"},"repository":{"type":"git","url":"https://github.com/axios/axios.git"},"keywords":["xhr","http","ajax","promise","node"],"author":"Matt Zabriskie","license":"MIT","bugs":{"url":"https://github.com/axios/axios/issues"},"homepage":"https://axios-http.com","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"jsdelivr":"dist/axios.min.js","unpkg":"dist/axios.min.js","typings":"./index.d.ts","dependencies":{"follow-redirects":"^1.14.0"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz","_integrity":"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==","_from":"axios@0.21.4"}');
+module.exports = JSON.parse('{"_args":[["axios@0.21.4","/home/francisco/Documentos/semestre-B2023/sistemas-computacionales/cuestionario/quest-gitHub/questions"]],"_development":true,"_from":"axios@0.21.4","_id":"axios@0.21.4","_inBundle":false,"_integrity":"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==","_location":"/axios","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"axios@0.21.4","name":"axios","escapedName":"axios","rawSpec":"0.21.4","saveSpec":null,"fetchSpec":"0.21.4"},"_requiredBy":["#DEV:/"],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz","_spec":"0.21.4","_where":"/home/francisco/Documentos/semestre-B2023/sistemas-computacionales/cuestionario/quest-gitHub/questions","author":{"name":"Matt Zabriskie"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"bugs":{"url":"https://github.com/axios/axios/issues"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"dependencies":{"follow-redirects":"^1.14.0"},"description":"Promise based HTTP client for the browser and node.js","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"homepage":"https://axios-http.com","jsdelivr":"dist/axios.min.js","keywords":["xhr","http","ajax","promise","node"],"license":"MIT","main":"index.js","name":"axios","repository":{"type":"git","url":"git+https://github.com/axios/axios.git"},"scripts":{"build":"NODE_ENV=production grunt build","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","examples":"node ./examples/server.js","fix":"eslint --fix lib/**/*.js","postversion":"git push && git push --tags","preversion":"npm test","start":"node ./sandbox/server.js","test":"grunt test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json"},"typings":"./index.d.ts","unpkg":"dist/axios.min.js","version":"0.21.4"}');
 
 /***/ })
 
