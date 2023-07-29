@@ -15,14 +15,12 @@
                             :placeholder="firstName === '' ? (errors.error.firstName ? errors.error.firstName[0] : 'Nombre(s)') : 'Nombre(s)'"
                             :style="errors.error.firstName && (firstName === '' || errors.inputs.firstName) ? 'border-color: red' : ''" />
                     </div>
-
                     <div class="form-group pb-3">
                         <label>Apellido(s)</label>
                         <input v-model="lastName" class="form-control"
                             :placeholder="lastName === '' ? (errors.error.lastName ? errors.error.lastName[0] : 'Apellidos(s)') : 'Apellidos(s)'"
                             :style="errors.error.lastName && lastName === '' ? 'border-color: red' : ''" />
                     </div>
-
                     <div class="form-group pb-3">
                         <label>Cédula</label>
                         <input type="text" onkeypress="return event.charCode>=48 && event.charCode<=57" class="form-control"
@@ -30,7 +28,6 @@
                             :placeholder="dni === '' ? (errors.error.dni ? errors.error.dni[0] : 'Cédula') : 'Cédula'"
                             :style="errors.error.dni && (dni === '' || errors.inputs.dni === dni) ? 'border-color: red' : ''" />
                     </div>
-
                     <div class="form-group pb-3">
                         <label>Email</label>
                         <input type="email" v-model="email" pattern=".+@.+\.com" size="100" class="form-control"
@@ -39,7 +36,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="mt-3 d-flex justify-content-end">
                 <button type="button" class="btn btn-primary" @click="submitForm">Siguiente</button>
             </div>
@@ -67,7 +63,7 @@ export default {
             this.$router.push(`/questionnaire/${user_id}`);
         },
 
-        reset() {
+        async reset() {
             this.firstName = "";
             this.lastName = "";
             this.dni = "";
@@ -94,8 +90,8 @@ export default {
             // Send the userResponse object to your server or process it as needed
             try {
                 let user_id = await axios.post('store-user', userResponse);
-                console.log(userResponse);
-                await vm.proceedToQuestions(user_id);
+                await vm.reset();
+                await vm.proceedToQuestions(user_id.data.user.id);
             } catch (error) {
                 vm.errors.error = error.response.data.errors;
                 vm.errors.inputs = error.response.data.inputs;

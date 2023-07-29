@@ -58,7 +58,7 @@ class UserController extends Controller
 
         if ($validator->fails()) {
 
-            return response()->json(['errors' => $validator->errors(), 'inputs' => $request->all()], 422);
+            return response()->json(['errors' => $validator->errors(), 'inputs' => $request->all()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $user = User::create(

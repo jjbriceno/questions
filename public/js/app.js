@@ -5165,37 +5165,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     reset: function reset() {
-      this.firstName = "";
-      this.lastName = "";
-      this.dni = "";
-      this.email = "";
-    },
-    resetErrors: function resetErrors() {
       var _this2 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var vm;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
-              vm = _this2;
-              Object.keys(vm.errors.error).length !== 0 && (vm.errors.error = {}) && (vm.errors.inputs = {});
-            case 2:
+              _this2.firstName = "";
+              _this2.lastName = "";
+              _this2.dni = "";
+              _this2.email = "";
+            case 4:
             case "end":
               return _context2.stop();
           }
         }, _callee2);
       }))();
     },
-    submitForm: function submitForm() {
+    resetErrors: function resetErrors() {
       var _this3 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-        var vm, userResponse, user_id;
+        var vm;
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) switch (_context3.prev = _context3.next) {
             case 0:
-              // Combine questions and answers into an object
               vm = _this3;
-              _context3.next = 3;
+              Object.keys(vm.errors.error).length !== 0 && (vm.errors.error = {}) && (vm.errors.inputs = {});
+            case 2:
+            case "end":
+              return _context3.stop();
+          }
+        }, _callee3);
+      }))();
+    },
+    submitForm: function submitForm() {
+      var _this4 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var vm, userResponse, user_id;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) switch (_context4.prev = _context4.next) {
+            case 0:
+              // Combine questions and answers into an object
+              vm = _this4;
+              _context4.next = 3;
               return vm.resetErrors();
             case 3:
               userResponse = {
@@ -5204,28 +5215,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 dni: vm.dni,
                 email: vm.email
               }; // Send the userResponse object to your server or process it as needed
-              _context3.prev = 4;
-              _context3.next = 7;
+              _context4.prev = 4;
+              _context4.next = 7;
               return axios.post('store-user', userResponse);
             case 7:
-              user_id = _context3.sent;
-              console.log(userResponse);
-              _context3.next = 11;
-              return vm.proceedToQuestions(user_id);
-            case 11:
-              _context3.next = 18;
+              user_id = _context4.sent;
+              _context4.next = 10;
+              return vm.reset();
+            case 10:
+              _context4.next = 12;
+              return vm.proceedToQuestions(user_id.data.user.id);
+            case 12:
+              _context4.next = 19;
               break;
-            case 13:
-              _context3.prev = 13;
-              _context3.t0 = _context3["catch"](4);
-              vm.errors.error = _context3.t0.response.data.errors;
-              vm.errors.inputs = _context3.t0.response.data.inputs;
+            case 14:
+              _context4.prev = 14;
+              _context4.t0 = _context4["catch"](4);
+              vm.errors.error = _context4.t0.response.data.errors;
+              vm.errors.inputs = _context4.t0.response.data.inputs;
               console.log(vm.errors);
-            case 18:
+            case 19:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
-        }, _callee3, null, [[4, 13]]);
+        }, _callee4, null, [[4, 14]]);
       }))();
     }
   }
