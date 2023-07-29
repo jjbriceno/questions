@@ -97,16 +97,10 @@ export default {
             };
             // Send the userResponse object to your server or process it as needed
             try {
-<<<<<<< HEAD
-                let user_id = await axios.post('store-user', userResponse);
-                console.log(userResponse);
-                await vm.proceedToQuestions(user_id);
-=======
                 let response = await axios.post('store-user', userResponse);
                 let user_id = response.data.user.id
                 console.log(user_id, userResponse);
                 this.proceedToQuestions(user_id);
->>>>>>> b8a7df6 (Improved dataset storage logic)
             } catch (error) {
                 vm.errors = error.response.data.errors;
             }
@@ -114,4 +108,3 @@ export default {
     },
 };
 </script>
-  
