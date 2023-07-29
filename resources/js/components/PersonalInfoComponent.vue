@@ -12,37 +12,30 @@
                     <div class="form-group pb-3">
                         <label>Nombre(s)</label>
                         <input v-model="firstName" class="form-control"
-                            :style="errors.error.firstName && firstName === '' ? 'border-color: red' : ''" />
-                        <p v-if="errors.error.firstName" class="text-danger">
-                            <b>{{ errors.inputs.firstName === firstName || firstName === '' ? errors.error.firstName[0] : '' }}</b>
-                        </p>
+                            :placeholder="firstName === '' ? (errors.error.firstName ? errors.error.firstName[0] : 'Nombre(s)') : 'Nombre(s)'"
+                            :style="errors.error.firstName && (firstName === '' || errors.inputs.firstName) ? 'border-color: red' : ''" />
                     </div>
 
                     <div class="form-group pb-3">
                         <label>Apellido(s)</label>
-                        <input v-model="lastName" class="form-control" required
+                        <input v-model="lastName" class="form-control"
+                            :placeholder="lastName === '' ? (errors.error.lastName ? errors.error.lastName[0] : 'Apellidos(s)') : 'Apellidos(s)'"
                             :style="errors.error.lastName && lastName === '' ? 'border-color: red' : ''" />
-                        <p v-if="errors.error.lastName" class="text-danger">
-                            <b>{{ errors.inputs.lastName === lastName || lastName === '' ? errors.error.lastName[0] : '' }}</b>
-                        </p>
                     </div>
 
                     <div class="form-group pb-3">
                         <label>Cédula</label>
                         <input type="text" onkeypress="return event.charCode>=48 && event.charCode<=57" class="form-control"
-                            size="9" v-model="dni" :style="errors.error.dni && dni === '' ? 'border-color: red' : ''" />
-                        <p v-if="errors.error.dni" class="text-danger">
-                            <b>{{ errors.inputs.dni === dni || dni === '' ? errors.error.dni[0] : '' }}</b>
-                        </p>
+                            v-model="dni"
+                            :placeholder="dni === '' ? (errors.error.dni ? errors.error.dni[0] : 'Cédula') : 'Cédula'"
+                            :style="errors.error.dni && (dni === '' || errors.inputs.dni === dni) ? 'border-color: red' : ''" />
                     </div>
 
                     <div class="form-group pb-3">
                         <label>Email</label>
-                        <input type="email" v-model="email" pattern=".+@.+\.com" size="30" class="form-control"
-                            :style="errors.error.email && email === '' ? 'border-color: red' : ''" />
-                        <p v-if="errors.error.email" class="text-danger">
-                            <b>{{ errors.inputs.email === email || email === '' ? errors.error.email[0] : '' }}</b>
-                        </p>
+                        <input type="email" v-model="email" pattern=".+@.+\.com" size="100" class="form-control"
+                            :placeholder="email === '' ? (errors.error.email ? errors.error.email[0] : 'Email') : 'Email'"
+                            :style="errors.error.email && (email === '' || errors.inputs.email === email) ? 'border-color: red' : ''" />
                     </div>
                 </div>
             </div>
@@ -83,7 +76,7 @@ export default {
 
         async resetErrors() {
             const vm = this;
-            // Object.keys(vm.errors.error).length !== 0 && (vm.errors.error = '');
+            Object.keys(vm.errors.error).length !== 0 && (vm.errors.error = {}) && (vm.errors.inputs = {});
         },
 
         async submitForm() {
@@ -100,11 +93,9 @@ export default {
             };
             // Send the userResponse object to your server or process it as needed
             try {
-                let response = await axios.post('store-user', userResponse);
-                let user_id = response.data.user.id
-                console.log(user_id, userResponse);
-                this.proceedToQuestions(user_id);
-                this.reset();
+                let user_id = await axios.post('store-user', userResponse);
+                console.log(userResponse);
+                await vm.proceedToQuestions(user_id);
             } catch (error) {
                 vm.errors.error = error.response.data.errors;
                 vm.errors.inputs = error.response.data.inputs;
@@ -114,3 +105,4 @@ export default {
     },
 };
 </script>
+  

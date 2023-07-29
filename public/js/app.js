@@ -5177,8 +5177,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
-              vm = _this2; // Object.keys(vm.errors.error).length !== 0 && (vm.errors.error = '');
-            case 1:
+              vm = _this2;
+              Object.keys(vm.errors.error).length !== 0 && (vm.errors.error = {}) && (vm.errors.inputs = {});
+            case 2:
             case "end":
               return _context2.stop();
           }
@@ -5188,7 +5189,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     submitForm: function submitForm() {
       var _this3 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-        var vm, userResponse, response, user_id;
+        var vm, userResponse, user_id;
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) switch (_context3.prev = _context3.next) {
             case 0:
@@ -5207,24 +5208,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _context3.next = 7;
               return axios.post('store-user', userResponse);
             case 7:
-              response = _context3.sent;
-              user_id = response.data.user.id;
-              console.log(user_id, userResponse);
-              _this3.proceedToQuestions(user_id);
-              _this3.reset();
-              _context3.next = 19;
+              user_id = _context3.sent;
+              console.log(userResponse);
+              _context3.next = 11;
+              return vm.proceedToQuestions(user_id);
+            case 11:
+              _context3.next = 18;
               break;
-            case 14:
-              _context3.prev = 14;
+            case 13:
+              _context3.prev = 13;
               _context3.t0 = _context3["catch"](4);
               vm.errors.error = _context3.t0.response.data.errors;
               vm.errors.inputs = _context3.t0.response.data.inputs;
               console.log(vm.errors);
-            case 19:
+            case 18:
             case "end":
               return _context3.stop();
           }
-        }, _callee3, null, [[4, 14]]);
+        }, _callee3, null, [[4, 13]]);
       }))();
     }
   }
@@ -5587,7 +5588,10 @@ var render = function render() {
       expression: "firstName"
     }],
     staticClass: "form-control",
-    style: _vm.errors.error.firstName && _vm.firstName === "" ? "border-color: red" : "",
+    style: _vm.errors.error.firstName && (_vm.firstName === "" || _vm.errors.inputs.firstName) ? "border-color: red" : "",
+    attrs: {
+      placeholder: _vm.firstName === "" ? _vm.errors.error.firstName ? _vm.errors.error.firstName[0] : "Nombre(s)" : "Nombre(s)"
+    },
     domProps: {
       value: _vm.firstName
     },
@@ -5597,9 +5601,7 @@ var render = function render() {
         _vm.firstName = $event.target.value;
       }
     }
-  }), _vm._v(" "), _vm.errors.error.firstName ? _c("p", {
-    staticClass: "text-danger"
-  }, [_c("b", [_vm._v(_vm._s(_vm.errors.inputs.firstName === _vm.firstName || _vm.firstName === "" ? _vm.errors.error.firstName[0] : ""))])]) : _vm._e()]), _vm._v(" "), _c("div", {
+  })]), _vm._v(" "), _c("div", {
     staticClass: "form-group pb-3"
   }, [_c("label", [_vm._v("Apellido(s)")]), _vm._v(" "), _c("input", {
     directives: [{
@@ -5611,7 +5613,7 @@ var render = function render() {
     staticClass: "form-control",
     style: _vm.errors.error.lastName && _vm.lastName === "" ? "border-color: red" : "",
     attrs: {
-      required: ""
+      placeholder: _vm.lastName === "" ? _vm.errors.error.lastName ? _vm.errors.error.lastName[0] : "Apellidos(s)" : "Apellidos(s)"
     },
     domProps: {
       value: _vm.lastName
@@ -5622,9 +5624,7 @@ var render = function render() {
         _vm.lastName = $event.target.value;
       }
     }
-  }), _vm._v(" "), _vm.errors.error.lastName ? _c("p", {
-    staticClass: "text-danger"
-  }, [_c("b", [_vm._v(_vm._s(_vm.errors.inputs.lastName === _vm.lastName || _vm.lastName === "" ? _vm.errors.error.lastName[0] : ""))])]) : _vm._e()]), _vm._v(" "), _c("div", {
+  })]), _vm._v(" "), _c("div", {
     staticClass: "form-group pb-3"
   }, [_c("label", [_vm._v("Cédula")]), _vm._v(" "), _c("input", {
     directives: [{
@@ -5634,11 +5634,11 @@ var render = function render() {
       expression: "dni"
     }],
     staticClass: "form-control",
-    style: _vm.errors.error.dni && _vm.dni === "" ? "border-color: red" : "",
+    style: _vm.errors.error.dni && (_vm.dni === "" || _vm.errors.inputs.dni === _vm.dni) ? "border-color: red" : "",
     attrs: {
       type: "text",
       onkeypress: "return event.charCode>=48 && event.charCode<=57",
-      size: "9"
+      placeholder: _vm.dni === "" ? _vm.errors.error.dni ? _vm.errors.error.dni[0] : "Cédula" : "Cédula"
     },
     domProps: {
       value: _vm.dni
@@ -5649,9 +5649,7 @@ var render = function render() {
         _vm.dni = $event.target.value;
       }
     }
-  }), _vm._v(" "), _vm.errors.error.dni ? _c("p", {
-    staticClass: "text-danger"
-  }, [_c("b", [_vm._v(_vm._s(_vm.errors.inputs.dni === _vm.dni || _vm.dni === "" ? _vm.errors.error.dni[0] : ""))])]) : _vm._e()]), _vm._v(" "), _c("div", {
+  })]), _vm._v(" "), _c("div", {
     staticClass: "form-group pb-3"
   }, [_c("label", [_vm._v("Email")]), _vm._v(" "), _c("input", {
     directives: [{
@@ -5661,11 +5659,12 @@ var render = function render() {
       expression: "email"
     }],
     staticClass: "form-control",
-    style: _vm.errors.error.email && _vm.email === "" ? "border-color: red" : "",
+    style: _vm.errors.error.email && (_vm.email === "" || _vm.errors.inputs.email === _vm.email) ? "border-color: red" : "",
     attrs: {
       type: "email",
       pattern: ".+@.+\\.com",
-      size: "30"
+      size: "100",
+      placeholder: _vm.email === "" ? _vm.errors.error.email ? _vm.errors.error.email[0] : "Email" : "Email"
     },
     domProps: {
       value: _vm.email
@@ -5676,9 +5675,7 @@ var render = function render() {
         _vm.email = $event.target.value;
       }
     }
-  }), _vm._v(" "), _vm.errors.error.email ? _c("p", {
-    staticClass: "text-danger"
-  }, [_c("b", [_vm._v(_vm._s(_vm.errors.inputs.email === _vm.email || _vm.email === "" ? _vm.errors.error.email[0] : ""))])]) : _vm._e()])])]), _vm._v(" "), _c("div", {
+  })])])]), _vm._v(" "), _c("div", {
     staticClass: "mt-3 d-flex justify-content-end"
   }, [_c("button", {
     staticClass: "btn btn-primary",
