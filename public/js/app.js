@@ -5105,6 +5105,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     adminLogin: function adminLogin() {
+      //login logic
+      this.goToDataSet();
+    },
+    goToDataSet: function goToDataSet() {
       this.$router.push('/admin-actions');
     },
     reset: function reset() {
@@ -5407,9 +5411,13 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_c("h2", {
-    staticClass: "text-center"
-  }, [_vm._v("Acciones del Administrador")]), _vm._v(" "), _c("p", {
+  return _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("form", [_c("div", {
+    staticClass: "card"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("p", {
     staticClass: "text-center"
   }, [_vm._v("¿Desea descargar el Dataset?")]), _vm._v(" "), _c("div", {
     staticClass: "d-flex justify-content-center mt-3"
@@ -5425,9 +5433,17 @@ var render = function render() {
       "data-toggle": "tooltip",
       target: "_blank"
     }
-  }, [_vm._v("\n            Descargar\n        ")])])]);
+  }, [_vm._v("\n                        Descargar\n                    ")])])])])])]);
 };
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card-header d-flex justify-content-center bg-primary text-white"
+  }, [_c("h2", {
+    staticClass: "card-title"
+  }, [_vm._v("Acciones del Administrador")])]);
+}];
 render._withStripped = true;
 
 
@@ -5450,14 +5466,7 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "col-md-6"
-  }, [_c("form", {
-    on: {
-      submit: function submit($event) {
-        $event.preventDefault();
-        return _vm.adminLogin.apply(null, arguments);
-      }
-    }
-  }, [_c("div", {
+  }, [_c("form", [_c("div", {
     staticClass: "card"
   }, [_vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "card-body"
@@ -5525,7 +5534,7 @@ var render = function render() {
       type: "submit"
     },
     on: {
-      click: _vm.goToDataSet
+      click: _vm.adminLogin
     }
   }, [_vm._v("Iniciar sesión")])])])]);
 };

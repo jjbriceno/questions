@@ -14,7 +14,7 @@ class DataSetExport implements FromView //FromCollection, WithHeadings
     public function view() : View
     {
         return view('dataSet', [
-            'dataSet' => DataSet::all()
+            'dataSet' => DataSet::orderBy('user_id', 'ASC')->get()
         ]);
     }
     

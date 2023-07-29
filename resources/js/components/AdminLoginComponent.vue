@@ -2,7 +2,7 @@
     <div class="col-md-6">
         <!-- Section 2 -->
         <!-- ... Content for Section 2 ... -->
-        <form @submit.prevent="adminLogin">
+        <form>
             <div class="card">
                 <div class="card-header d-flex justify-content-center bg-primary text-white">
                     <h2 class="card-title">Iniciar sesión como administrador</h2>
@@ -20,7 +20,7 @@
             </div>
 
             <div class="mt-3 d-flex justify-content-center">
-                <button type="submit" @click="goToDataSet" class="btn btn-primary">Iniciar sesión</button>
+                <button type="submit" @click="adminLogin" class="btn btn-primary">Iniciar sesión</button>
             </div>
         </form>
     </div>
@@ -36,6 +36,10 @@ export default {
     },
     methods: {
         adminLogin() {
+            //login logic
+            this.goToDataSet();
+        },
+        goToDataSet(){
             this.$router.push('/admin-actions');
         },
 
