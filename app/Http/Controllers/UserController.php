@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -36,19 +37,37 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name'          => ['required'],
-            'last_name'     => ['required'],
-            'dni'           => ['required'],
-            'email'         => ['required'],
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'firstName'         => ['required'],
+                'lastName'          => ['required'],
+                'dni'               => ['required', 'numeric', 'unique:users,dni'],
+                'email'             => ['required', 'email', 'unique:users,email'],
+            ],
+            [
+                'firstName.required'            => 'Tu nombre nombre(s) es requerido',
+                'lastName.required'             => 'Tu apellido(s) es requerido',
+                'dni.required'                  => 'Introduce tu cédula de identidad',
+                'dni.unique'                    => 'Esta cédula ya ha sido registrada',
+                'email.required'                => 'Introduce un correo electrónico válido.',
+                'email.email'                   => 'Introduce un correo electrónico válido.',
+                'email.unique'                  => 'Este correo electrónico ya ha sido registrado',
+            ]
+        );
+
+        if ($validator->fails()) {
+
+            return response()->json(['errors' => $validator->errors(), 'inputs' => $request->all()], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
 
         $user = User::create(
             [
-                'name'          => $request->name,
-                'last_name'     => $request->last_name,
+                'name'          => $request->firstName,
+                'last_name'     => $request->lastName,
                 'dni'           => $request->dni,
                 'email'         => $request->email,
+                'password'      => '123456'
             ]
         );
 
@@ -86,12 +105,29 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $this->validate($request, [
-            'name'          => ['required'],
-            'last_name'     => ['required'],
-            'dni'           => ['required'],
-            'email'         => ['required'],
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'firstName'         => ['required'],
+                'lastName'          => ['required'],
+                'dni'               => ['required', 'numeric', 'unique:users,dni' . $user->id],
+                'email'             => ['required', 'email', 'unique:users,email' . $user->id],
+            ],
+            [
+                'firstName.required'            => 'Tu nombre nombre(s) es requerido',
+                'lastName.required'             => 'Tu apellido(s) es requerido',
+                'dni.required'                  => 'Introduce tu cédula de identidad',
+                'dni.unique'                    => 'Esta cédula ya ha sido registrada',
+                'email.required'                => 'Introduce un correo electrónico válido.',
+                'email.email'                   => 'Introduce un correo electrónico válido.',
+                'email.unique'                  => 'Este correo electrónico ya ha sido registrado',
+            ]
+        );
+
+        if ($validator->fails()) {
+
+            return response()->json(['errors' => $validator->errors(), 'inputs' => $request->all()], 422);
+        }
 
         $user = User::updateOrCreate(
             [
@@ -117,6 +153,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+
         return response()->json(['user' => $user], Response::HTTP_OK);
     }
 }

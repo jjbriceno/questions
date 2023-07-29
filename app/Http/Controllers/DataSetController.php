@@ -45,23 +45,25 @@ class DataSetController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'question_id'       => ['required'],
+            // 'question_id'       => ['required'],
             'user_id'           => ['required'],
-            'user_answer'       => ['required'],
+            'user_answers.*'       => ['required'],
         ]);
 
-        $question       = Question::find($request->question_id);
         $user_id        = User::find($request->user_id)->id ?? 1;
-        $data_set       = DataSet::create(
+        foreach ($request->user_answers as $question_id => $user_answer) {
+            $question       = Question::find($question_id + 1);
+            $data_set       = DataSet::create(
             [
                 'category_id'       => $question->category_id,
                 'question_id'       => $question->id,
                 'user_id'           => $user_id,
-                'user_answer'       => $request->user_answer,
+                'user_answer'       => $user_answer,
                 'correct_answer'    => $question->answer,
-                'output'            => $request->user_answer == $question->answer,
-            ]
-        );
+                'output'            => $user_answer == $question->answer,
+                ]
+            );
+        }
 
         return response()->json(['data_set' => $data_set], Response::HTTP_CREATED);
     }
@@ -100,6 +102,7 @@ class DataSetController extends Controller
      */
     public function update(Request $request, DataSet $data_set)
     {
+        //improve the logic of updating a dataset
         $this->validate($request, [
             'question_id'       => ['required'],
             'user_id'           => ['required'],
@@ -143,5 +146,25 @@ class DataSetController extends Controller
     public function export()
     {
         return Excel::download(new DataSetExport, 'DataSet.csv');
+    }
+
+    /**
+     * Gets a user's answer score.
+     *
+     * @param  $user_id
+     * @return \Illuminate\Http\Response with the result of the request
+     */
+    public function getScore($user_id)
+    {
+        $data_set = DataSet::query()->where(
+            [
+                'user_id'   => $user_id,
+            ]
+        );
+        $scores = [
+            "total"     => count($data_set->get()),
+            "score"     => count($data_set->where('output', true)->get()),
+        ];
+        return response()->json(['scores' => $scores], Response::HTTP_OK);
     }
 }
