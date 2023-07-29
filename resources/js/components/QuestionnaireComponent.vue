@@ -80,12 +80,17 @@ export default {
                 let response = await axios.post('data-set/store', userResponse);
                 let user_data_set = response.data.data_set;
                 // Clear the form after submission
+                this.goCompletedQuestionnaire(this.user_id);
                 this.reset();
             } catch (error) {
                 console.log(error);
                 this.errors = error.response.data.errors;
             }
         },
+
+        async goCompletedQuestionnaire(user_id){
+            this.$router.push(`/completed/${user_id}`);
+        }
     },
 
     computed: {

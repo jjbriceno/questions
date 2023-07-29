@@ -9,11 +9,16 @@
                 </div>
                 <div class="card-body">
                     <p class="text-center">¿Desea descargar el Dataset?</p>
-                    <div class="d-flex justify-content-center mt-3">
-                        <a class="btn btn-primary" :href="'/data-set/export'" title="Download" data-toggle="tooltip" v-has-tooltip
-                            target="_blank">
-                            Descargar
-                        </a>
+                    <div class="mt-3 d-flex justify-content-between">
+                        <div class="d-flex justify-content-center mt-3">
+                            <a class="btn btn-primary" :href="'/data-set/export'" title="Download" data-toggle="tooltip" v-has-tooltip
+                                target="_blank">
+                                Descargar
+                            </a>
+                        </div>
+                        <div class="mt-3 d-flex justify-content-center">
+                            <button type="submit" @click="goHome" class="btn btn-primary">Ir a Inicio</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -27,6 +32,13 @@ export default {
         return {
             showAdminActions: false,
         };
+    },
+
+    methods : {
+        async goHome() {
+            // ... Proceed to questionnaire logic ...
+            this.$router.push(`/`);
+        },
     },
 };
 </script>

@@ -22,6 +22,8 @@ import QuestionnaireComponent from './components/QuestionnaireComponent.vue';
 
 import AdminActionsComponent from './components/AdminActionsComponent.vue';
 
+import CompletedQuestionnaireComponent from './components/CompletedQuestionnaireComponent.vue';
+
 Vue.use(VueRouter);
 
 // window.Vue = require('vue').default;
@@ -53,6 +55,8 @@ const router = new VueRouter({
         { path: '/admin-actions', component: AdminActionsComponent },
         { path: '/personal-info', component: PersonalInfoComponent },
         { path: '/questionnaire/:id', name: 'questionnaire', component: QuestionnaireComponent },
+        { path: '/completed/:id', component: CompletedQuestionnaireComponent },
+        // Add other routes for other components if needed
     ],
 });
 

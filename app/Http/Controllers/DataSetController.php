@@ -147,4 +147,24 @@ class DataSetController extends Controller
     {
         return Excel::download(new DataSetExport, 'DataSet.csv');
     }
+
+    /**
+     * Gets a user's answer score.
+     *
+     * @param  $user_id
+     * @return \Illuminate\Http\Response with the result of the request
+     */
+    public function getScore($user_id)
+    {
+        $data_set = DataSet::query()->where(
+            [
+                'user_id'   => $user_id,
+            ]
+        );
+        $scores = [
+            "total"     => count($data_set->get()),
+            "score"     => count($data_set->where('output', true)->get()),
+        ];
+        return response()->json(['scores' => $scores], Response::HTTP_OK);
+    }
 }
