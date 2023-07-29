@@ -9,37 +9,38 @@
                     <h2 class="card-title">Información personal</h2>
                 </div>
                 <div class="card-body">
-                    <div class="form-group">
+                    <div class="form-group pb-3">
                         <label>Nombre(s)</label>
-                        <input v-model="firstName" class="form-control" required />
-                        <p v-if="errors.firstName && firstName === ''" class="text-danger">
+                        <input v-model="firstName" class="form-control"
+                            :style="errors.firstName && firstName === '' ? 'border-color: red' : ''" />
+                        <p v-if="errors.firstName" class="text-danger">
                             <b>{{ errors.firstName[0] }}</b>
                         </p>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group pb-3">
                         <label>Apellido(s)</label>
-                        <input v-model="lastName" class="form-control"
-                            :style="errors.lastName ? 'border-color:red' : ''" required />
-                        <p v-if="errors.lastName && lastName === ''" class="text-danger">
+                        <input v-model="lastName" class="form-control" required
+                            :style="errors.lastName && lastName === '' ? 'border-color: red' : ''" />
+                        <p v-if="errors.lastName" class="text-danger">
                             <b>{{ errors.lastName[0] }}</b>
                         </p>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group pb-3">
                         <label>Cédula</label>
                         <input type="text" onkeypress="return event.charCode>=48 && event.charCode<=57" class="form-control"
-                            size="9" v-model="dni" required />
-                        <p v-if="errors.dni && dni === ''" class="text-danger">
+                            size="9" v-model="dni" :style="errors.dni && dni === '' ? 'border-color: red' : ''" />
+                        <p v-if="errors.dni" class="text-danger">
                             <b>{{ errors.dni[0] }}</b>
                         </p>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group pb-3">
                         <label>Email</label>
                         <input type="email" v-model="email" pattern=".+@.+\.com" size="30" class="form-control"
-                            required />
-                        <p v-if="errors.email && email === ''" class="text-danger">
+                            :style="errors.email && email === '' ? 'border-color: red' : ''" />
+                        <p v-if="errors.email" class="text-danger">
                             <b>{{ errors.email[0] }}</b>
                         </p>
                     </div>
@@ -65,7 +66,7 @@ export default {
         };
     },
     methods: {
-        proceedToQuestions(user_id) {
+        async proceedToQuestions(user_id) {
             // ... Proceed to questionnaire logic ...
             this.$router.push(`/questionnaire/${user_id}`);
         },
@@ -77,33 +78,33 @@ export default {
             this.email = "";
         },
 
+        async resetErrors() {
+            const vm = this;
+            Object.keys(vm.errors).length !== 0 && (vm.errors = {});
+        },
+
         async submitForm() {
             // Combine questions and answers into an object
+            const vm = this;
+
+            await vm.resetErrors();
+
             const userResponse = {
-                firstName: this.firstName,
-                lastName: this.lastName,
-                dni: this.dni,
-                email: this.email,
+                firstName: vm.firstName,
+                lastName: vm.lastName,
+                dni: vm.dni,
+                email: vm.email,
             };
             // Send the userResponse object to your server or process it as needed
             try {
                 let user_id = await axios.post('store-user', userResponse);
                 console.log(userResponse);
-                this.proceedToQuestions(user_id);
+                await vm.proceedToQuestions(user_id);
             } catch (error) {
-                this.errors = error.response.data.errors;
+                vm.errors = error.response.data.errors;
             }
-
-            // Clear the form after submission
-            this.reset();
         },
     },
 };
 </script>
-
-<style>
-.input--error {
-    border-color: red;
-}
-</style>
   
