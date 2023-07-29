@@ -40,14 +40,16 @@ class UserController extends Controller
         $this->validate($request, [
             'firstName'         => ['required'],
             'lastName'          => ['required'],
-            'dni'               => ['required', 'numeric'],
-            'email'             => ['required', 'email'],
+            'dni'               => ['required', 'numeric', 'unique:users,dni'],
+            'email'             => ['required', 'email', 'unique:users,email'],
         ], [
             'firstName.required'            => 'Tu nombre nombre(s) es requerdio',
             'lastName.required'             => 'Tu apellido(s) es requerido',
             'dni.required'                  => 'Introduce tu cédula de identidad',
+            'dni.unique'                    => 'Esta cédula ya ha sido resgistrada',
             'email.required'                => 'Introduce un correo electrónico válido.',
             'email.email'                   => 'Introduce un correo electrónico válido.',
+            'email.unique'                  => 'Este correo electrónico ya ha sido resgistrado',
         ]);
 
         $user = User::create(
@@ -97,8 +99,8 @@ class UserController extends Controller
         $this->validate($request, [
             'name'          => ['required'],
             'last_name'     => ['required'],
-            'dni'           => ['required'],
-            'email'         => ['required'],
+            'dni'           => ['required', 'numeric', 'unique:users,dni,'.$user->id],
+            'email'         => ['required', 'email', 'unique:users,email,'.$user->id],
         ]);
 
         $user = User::updateOrCreate(

@@ -101,6 +101,7 @@ export default {
                 let user_id = response.data.user.id
                 console.log(user_id, userResponse);
                 this.proceedToQuestions(user_id);
+                this.reset();
             } catch (error) {
                 vm.errors = error.response.data.errors;
             }

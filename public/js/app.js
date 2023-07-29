@@ -5180,19 +5180,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     submitForm: function submitForm() {
-<<<<<<< HEAD
       var _this3 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-        var vm, userResponse, user_id;
+        var vm, userResponse, response, user_id;
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) switch (_context3.prev = _context3.next) {
-=======
-      var _this = this;
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var userResponse, response, user_id;
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) switch (_context.prev = _context.next) {
->>>>>>> b8a7df6 (Improved dataset storage logic)
             case 0:
               // Combine questions and answers into an object
               vm = _this3;
@@ -5208,45 +5200,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _context3.prev = 4;
               _context3.next = 7;
               return axios.post('store-user', userResponse);
-<<<<<<< HEAD
             case 7:
-              user_id = _context3.sent;
-              console.log(userResponse);
-              _context3.next = 11;
-              return vm.proceedToQuestions(user_id);
-            case 11:
-              _context3.next = 16;
-              break;
-            case 13:
-              _context3.prev = 13;
-              _context3.t0 = _context3["catch"](4);
-              vm.errors = _context3.t0.response.data.errors;
-            case 16:
-=======
-            case 4:
-              response = _context.sent;
+              response = _context3.sent;
               user_id = response.data.user.id;
               console.log(user_id, userResponse);
-              _this.proceedToQuestions(user_id);
-              _context.next = 13;
+              _this3.proceedToQuestions(user_id);
+              _this3.reset();
+              _context3.next = 17;
               break;
-            case 10:
-              _context.prev = 10;
-              _context.t0 = _context["catch"](1);
-              _this.errors = _context.t0.response.data.errors;
-            case 13:
-              // Clear the form after submission
-              _this.reset();
             case 14:
->>>>>>> b8a7df6 (Improved dataset storage logic)
+              _context3.prev = 14;
+              _context3.t0 = _context3["catch"](4);
+              vm.errors = _context3.t0.response.data.errors;
+            case 17:
             case "end":
               return _context3.stop();
           }
-<<<<<<< HEAD
-        }, _callee3, null, [[4, 13]]);
-=======
-        }, _callee, null, [[1, 10]]);
->>>>>>> b8a7df6 (Improved dataset storage logic)
+        }, _callee3, null, [[4, 14]]);
       }))();
     }
   }
@@ -5337,22 +5307,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               return axios.post('data-set/store', userResponse);
             case 4:
               response = _context.sent;
-              user_data_set = response.data.data_set;
-              console.log(userResponse, user_data_set);
-              // Clear the form after submission
+              user_data_set = response.data.data_set; // Clear the form after submission
               _this.reset();
-              _context.next = 14;
+              _context.next = 13;
               break;
-            case 10:
-              _context.prev = 10;
+            case 9:
+              _context.prev = 9;
               _context.t0 = _context["catch"](1);
               console.log(_context.t0);
               _this.errors = _context.t0.response.data.errors;
-            case 14:
+            case 13:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[1, 10]]);
+        }, _callee, null, [[1, 9]]);
       }))();
     }
   },
