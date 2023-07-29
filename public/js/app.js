@@ -5934,7 +5934,7 @@ var render = function render() {
     staticClass: "col-md-6"
   }, [_c("h1", {
     staticClass: "text-center"
-  }, [_vm._v("Bienvenido a la recolección de datos de los estudiantes de primaria")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Bienvenido al Cuestionario de Matemáticas para la recolección de datos de los estudiantes de primaria")]), _vm._v(" "), _c("div", {
     staticClass: "d-flex justify-content-center mt-3"
   }, [_c("button", {
     staticClass: "btn btn-primary mx-2",
