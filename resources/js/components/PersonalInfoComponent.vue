@@ -105,9 +105,10 @@ export default {
             };
             // Send the userResponse object to your server or process it as needed
             try {
-                let user_id = await axios.post('store-user', userResponse);
+                let response = await axios.post('store-user', userResponse);
+                let user_id = response.data.user.id;
                 await vm.reset();
-                await vm.proceedToQuestions(user_id.data.user.id);
+                await vm.proceedToQuestions(user_id);
             } catch (error) {
                 vm.errors.error = error.response.data.errors;
                 vm.errors.inputs = error.response.data.inputs;
