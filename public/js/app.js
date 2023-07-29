@@ -5142,7 +5142,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       lastName: "",
       dni: "",
       email: "",
-      errors: {}
+      errors: {
+        error: {},
+        inputs: {}
+      }
     };
   },
   methods: {
@@ -5174,9 +5177,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
-              vm = _this2;
-              Object.keys(vm.errors).length !== 0 && (vm.errors = {});
-            case 2:
+              vm = _this2; // Object.keys(vm.errors.error).length !== 0 && (vm.errors.error = '');
+            case 1:
             case "end":
               return _context2.stop();
           }
@@ -5210,13 +5212,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               console.log(user_id, userResponse);
               _this3.proceedToQuestions(user_id);
               _this3.reset();
-              _context3.next = 17;
+              _context3.next = 19;
               break;
             case 14:
               _context3.prev = 14;
               _context3.t0 = _context3["catch"](4);
-              vm.errors = _context3.t0.response.data.errors;
-            case 17:
+              vm.errors.error = _context3.t0.response.data.errors;
+              vm.errors.inputs = _context3.t0.response.data.inputs;
+              console.log(vm.errors);
+            case 19:
             case "end":
               return _context3.stop();
           }
@@ -5583,7 +5587,7 @@ var render = function render() {
       expression: "firstName"
     }],
     staticClass: "form-control",
-    style: _vm.errors.firstName && _vm.firstName === "" ? "border-color: red" : "",
+    style: _vm.errors.error.firstName && _vm.firstName === "" ? "border-color: red" : "",
     domProps: {
       value: _vm.firstName
     },
@@ -5593,9 +5597,9 @@ var render = function render() {
         _vm.firstName = $event.target.value;
       }
     }
-  }), _vm._v(" "), _vm.errors.firstName ? _c("p", {
+  }), _vm._v(" "), _vm.errors.error.firstName ? _c("p", {
     staticClass: "text-danger"
-  }, [_c("b", [_vm._v(_vm._s(_vm.errors.firstName[0]))])]) : _vm._e()]), _vm._v(" "), _c("div", {
+  }, [_c("b", [_vm._v(_vm._s(_vm.errors.inputs.firstName === _vm.firstName || _vm.firstName === "" ? _vm.errors.error.firstName[0] : ""))])]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "form-group pb-3"
   }, [_c("label", [_vm._v("Apellido(s)")]), _vm._v(" "), _c("input", {
     directives: [{
@@ -5605,7 +5609,7 @@ var render = function render() {
       expression: "lastName"
     }],
     staticClass: "form-control",
-    style: _vm.errors.lastName && _vm.lastName === "" ? "border-color: red" : "",
+    style: _vm.errors.error.lastName && _vm.lastName === "" ? "border-color: red" : "",
     attrs: {
       required: ""
     },
@@ -5618,9 +5622,9 @@ var render = function render() {
         _vm.lastName = $event.target.value;
       }
     }
-  }), _vm._v(" "), _vm.errors.lastName ? _c("p", {
+  }), _vm._v(" "), _vm.errors.error.lastName ? _c("p", {
     staticClass: "text-danger"
-  }, [_c("b", [_vm._v(_vm._s(_vm.errors.lastName[0]))])]) : _vm._e()]), _vm._v(" "), _c("div", {
+  }, [_c("b", [_vm._v(_vm._s(_vm.errors.inputs.lastName === _vm.lastName || _vm.lastName === "" ? _vm.errors.error.lastName[0] : ""))])]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "form-group pb-3"
   }, [_c("label", [_vm._v("Cédula")]), _vm._v(" "), _c("input", {
     directives: [{
@@ -5630,7 +5634,7 @@ var render = function render() {
       expression: "dni"
     }],
     staticClass: "form-control",
-    style: _vm.errors.dni && _vm.dni === "" ? "border-color: red" : "",
+    style: _vm.errors.error.dni && _vm.dni === "" ? "border-color: red" : "",
     attrs: {
       type: "text",
       onkeypress: "return event.charCode>=48 && event.charCode<=57",
@@ -5645,9 +5649,9 @@ var render = function render() {
         _vm.dni = $event.target.value;
       }
     }
-  }), _vm._v(" "), _vm.errors.dni ? _c("p", {
+  }), _vm._v(" "), _vm.errors.error.dni ? _c("p", {
     staticClass: "text-danger"
-  }, [_c("b", [_vm._v(_vm._s(_vm.errors.dni[0]))])]) : _vm._e()]), _vm._v(" "), _c("div", {
+  }, [_c("b", [_vm._v(_vm._s(_vm.errors.inputs.dni === _vm.dni || _vm.dni === "" ? _vm.errors.error.dni[0] : ""))])]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "form-group pb-3"
   }, [_c("label", [_vm._v("Email")]), _vm._v(" "), _c("input", {
     directives: [{
@@ -5657,7 +5661,7 @@ var render = function render() {
       expression: "email"
     }],
     staticClass: "form-control",
-    style: _vm.errors.email && _vm.email === "" ? "border-color: red" : "",
+    style: _vm.errors.error.email && _vm.email === "" ? "border-color: red" : "",
     attrs: {
       type: "email",
       pattern: ".+@.+\\.com",
@@ -5672,9 +5676,9 @@ var render = function render() {
         _vm.email = $event.target.value;
       }
     }
-  }), _vm._v(" "), _vm.errors.email ? _c("p", {
+  }), _vm._v(" "), _vm.errors.error.email ? _c("p", {
     staticClass: "text-danger"
-  }, [_c("b", [_vm._v(_vm._s(_vm.errors.email[0]))])]) : _vm._e()])])]), _vm._v(" "), _c("div", {
+  }, [_c("b", [_vm._v(_vm._s(_vm.errors.inputs.email === _vm.email || _vm.email === "" ? _vm.errors.error.email[0] : ""))])]) : _vm._e()])])]), _vm._v(" "), _c("div", {
     staticClass: "mt-3 d-flex justify-content-end"
   }, [_c("button", {
     staticClass: "btn btn-primary",
@@ -43936,7 +43940,7 @@ Vue.compile = compileToFunctions;
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"_args":[["axios@0.21.4","/home/francisco/Documentos/semestre-B2023/sistemas-computacionales/cuestionario/quest-gitHub/questions"]],"_development":true,"_from":"axios@0.21.4","_id":"axios@0.21.4","_inBundle":false,"_integrity":"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==","_location":"/axios","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"axios@0.21.4","name":"axios","escapedName":"axios","rawSpec":"0.21.4","saveSpec":null,"fetchSpec":"0.21.4"},"_requiredBy":["#DEV:/"],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz","_spec":"0.21.4","_where":"/home/francisco/Documentos/semestre-B2023/sistemas-computacionales/cuestionario/quest-gitHub/questions","author":{"name":"Matt Zabriskie"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"bugs":{"url":"https://github.com/axios/axios/issues"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"dependencies":{"follow-redirects":"^1.14.0"},"description":"Promise based HTTP client for the browser and node.js","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"homepage":"https://axios-http.com","jsdelivr":"dist/axios.min.js","keywords":["xhr","http","ajax","promise","node"],"license":"MIT","main":"index.js","name":"axios","repository":{"type":"git","url":"git+https://github.com/axios/axios.git"},"scripts":{"build":"NODE_ENV=production grunt build","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","examples":"node ./examples/server.js","fix":"eslint --fix lib/**/*.js","postversion":"git push && git push --tags","preversion":"npm test","start":"node ./sandbox/server.js","test":"grunt test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json"},"typings":"./index.d.ts","unpkg":"dist/axios.min.js","version":"0.21.4"}');
+module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"Promise based HTTP client for the browser and node.js","main":"index.js","scripts":{"test":"grunt test","start":"node ./sandbox/server.js","build":"NODE_ENV=production grunt build","preversion":"npm test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json","postversion":"git push && git push --tags","examples":"node ./examples/server.js","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","fix":"eslint --fix lib/**/*.js"},"repository":{"type":"git","url":"https://github.com/axios/axios.git"},"keywords":["xhr","http","ajax","promise","node"],"author":"Matt Zabriskie","license":"MIT","bugs":{"url":"https://github.com/axios/axios/issues"},"homepage":"https://axios-http.com","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"jsdelivr":"dist/axios.min.js","unpkg":"dist/axios.min.js","typings":"./index.d.ts","dependencies":{"follow-redirects":"^1.14.0"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz","_integrity":"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==","_from":"axios@0.21.4"}');
 
 /***/ })
 

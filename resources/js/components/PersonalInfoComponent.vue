@@ -12,36 +12,36 @@
                     <div class="form-group pb-3">
                         <label>Nombre(s)</label>
                         <input v-model="firstName" class="form-control"
-                            :style="errors.firstName && firstName === '' ? 'border-color: red' : ''" />
-                        <p v-if="errors.firstName" class="text-danger">
-                            <b>{{ errors.firstName[0] }}</b>
+                            :style="errors.error.firstName && firstName === '' ? 'border-color: red' : ''" />
+                        <p v-if="errors.error.firstName" class="text-danger">
+                            <b>{{ errors.inputs.firstName === firstName || firstName === '' ? errors.error.firstName[0] : '' }}</b>
                         </p>
                     </div>
 
                     <div class="form-group pb-3">
                         <label>Apellido(s)</label>
                         <input v-model="lastName" class="form-control" required
-                            :style="errors.lastName && lastName === '' ? 'border-color: red' : ''" />
-                        <p v-if="errors.lastName" class="text-danger">
-                            <b>{{ errors.lastName[0] }}</b>
+                            :style="errors.error.lastName && lastName === '' ? 'border-color: red' : ''" />
+                        <p v-if="errors.error.lastName" class="text-danger">
+                            <b>{{ errors.inputs.lastName === lastName || lastName === '' ? errors.error.lastName[0] : '' }}</b>
                         </p>
                     </div>
 
                     <div class="form-group pb-3">
                         <label>Cédula</label>
                         <input type="text" onkeypress="return event.charCode>=48 && event.charCode<=57" class="form-control"
-                            size="9" v-model="dni" :style="errors.dni && dni === '' ? 'border-color: red' : ''" />
-                        <p v-if="errors.dni" class="text-danger">
-                            <b>{{ errors.dni[0] }}</b>
+                            size="9" v-model="dni" :style="errors.error.dni && dni === '' ? 'border-color: red' : ''" />
+                        <p v-if="errors.error.dni" class="text-danger">
+                            <b>{{ errors.inputs.dni === dni || dni === '' ? errors.error.dni[0] : '' }}</b>
                         </p>
                     </div>
 
                     <div class="form-group pb-3">
                         <label>Email</label>
                         <input type="email" v-model="email" pattern=".+@.+\.com" size="30" class="form-control"
-                            :style="errors.email && email === '' ? 'border-color: red' : ''" />
-                        <p v-if="errors.email" class="text-danger">
-                            <b>{{ errors.email[0] }}</b>
+                            :style="errors.error.email && email === '' ? 'border-color: red' : ''" />
+                        <p v-if="errors.error.email" class="text-danger">
+                            <b>{{ errors.inputs.email === email || email === '' ? errors.error.email[0] : '' }}</b>
                         </p>
                     </div>
                 </div>
@@ -62,7 +62,10 @@ export default {
             lastName: "",
             dni: "",
             email: "",
-            errors: {}
+            errors: {
+                error: {},
+                inputs: {}
+            }
         };
     },
     methods: {
@@ -80,7 +83,7 @@ export default {
 
         async resetErrors() {
             const vm = this;
-            Object.keys(vm.errors).length !== 0 && (vm.errors = {});
+            // Object.keys(vm.errors.error).length !== 0 && (vm.errors.error = '');
         },
 
         async submitForm() {
@@ -103,7 +106,9 @@ export default {
                 this.proceedToQuestions(user_id);
                 this.reset();
             } catch (error) {
-                vm.errors = error.response.data.errors;
+                vm.errors.error = error.response.data.errors;
+                vm.errors.inputs = error.response.data.inputs;
+                console.log(vm.errors);
             }
         },
     },
