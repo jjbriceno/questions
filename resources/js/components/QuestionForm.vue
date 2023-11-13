@@ -127,9 +127,9 @@
                     </div>
 
                     <div class="mt-3 d-flex justify-content-between">
-                        <button v-if="currentQuestionIndex > 0" type="button" class="btn btn-primary" @click="prevQuestion">
+                        <!-- <button v-if="currentQuestionIndex > 0" type="button" class="btn btn-primary" @click="prevQuestion">
                             Anterior
-                        </button>
+                        </button> -->
                         <button v-if="currentQuestionIndex < questions.length - 1" type="button" class="btn btn-primary"
                             @click="nextQuestion" :disabled="!isOptionSelected">
                             Siguiente

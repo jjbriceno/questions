@@ -27,7 +27,7 @@
             <td>{{ $data_set->question->question_name }}</td>
             <td>{{ $data_set->user_answer }}</td>
             <td>{{ $data_set->correct_answer }}</td>
-            <td>{{ $data_set->output }}</td>
+            <td>{{ $data_set->output ? '1' : '0' }}</td>
         </tr>
     @endforeach
     </tbody>
